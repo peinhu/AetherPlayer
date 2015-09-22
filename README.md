@@ -6,7 +6,7 @@ jquery.min.js
 musicplayer.js  
 
 0 Copy all files above into your project, you can put them wherever you like.  
-1 Reference the locations to these files in the HTML document which you would like to call the AetherPlayer.
+1 Reference the locations to these files in the HTML document which you would like to call the AetherPlayer.  
 2 Enjoy your music:)
 #Example
 http://2ndrenais.com/aetherplayer/index.html
