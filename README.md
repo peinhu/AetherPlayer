@@ -1,7 +1,7 @@
 #AetherPlayer
 AetherPlayer is a CD-like simple html5 audio player which is very suitable for blogs and personal websites. Setting up AetherPlayer can be as simple as adding two lines of code to your homepage.
 #How to use 
-musicplayer.css   
+musicplayer.css  
 musicplayer.js  
 
 0 Copy all files above into your project, you can put them wherever you like.  
