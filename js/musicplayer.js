@@ -9,11 +9,11 @@
 	//Edit your playlist here.
 	var playList = [
 		{'artist':'','musicName':'','musicURL':'','albumPic':'',},
-	
 	];
  
 	var loadFontAwesome = true;//If you set this to false ,then you should download the Font Awesome CSS and add it to your HTML document manually.
- 
+	
+	
 	window.onload = function() {
  
 		var _movetitle = false;
@@ -23,12 +23,10 @@
 		playerAdd(playerInit);	
 		
 		audio.onplaying = function(){
-			_playstatus = 'playing';
 			cdPlay();
 		}
 		
 		audio.onpause = function(){
-			_playstatus = 'pause';
 			cdPause();
 		}
 		
@@ -111,10 +109,12 @@
 		}
 		
 		function toPlay(){
+			_playstatus = 'playing';
 			audio.play();
 		}
 		
-		function toPause(){			
+		function toPause(){
+			_playstatus = 'pause';
 			audio.pause();
 		}		
 		
