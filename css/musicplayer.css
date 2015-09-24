@@ -10,15 +10,16 @@
 .music-player {transition:All 0.6s ease-in-out;-webkit-transition:All 0.6s ease-in-out;width:200px;height:200px;overflow:hidden;position:fixed;left:-100px;bottom:-100px;z-index:999;}
 @media (max-width:320px) {.music-player{display:none;}}
 .music-player:hover {left:0;bottom:0;}
-.i-circle{animation:circle 10s linear infinite;-webkit-animation:circle 10s linear infinite;width:200px;height:200px;border:#fff solid 5px; border-radius:100px;}
+.i-circle{animation:circle 10s linear infinite;-webkit-animation:circle 10s linear infinite;width:200px;height:200px;border:#fff solid 5px; border-radius:100px;animation-play-state:paused;}
 @keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
 @-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
 .textshadow{text-shadow: 0px 0px 5px #000;}
 .i-circle1{width:40px;height:40px;position:absolute;top:50%;left:50%;border-radius:20px;margin-top:-20px;margin-left:-20px; overflow:hidden;background:#fff;}
 .i-circle2{width:26px;height:26px;position:absolute;top:50%;left:50%;margin-left:-13px;margin-top:-13px;border-radius:13px;box-shadow:0px 0px 7px #666 inset;}
-.music-title{width:60%;font-size:14px;height:16px;line-height:16px;position:absolute;top:25%;left:20%;margin-top:-10px;color:#fff;text-shadow: 0px 0px 4px #000;overflow:hidden;}
+.music-title{width:60%;font-size:14px;height:16px;line-height:16px;position:absolute;top:25%;left:20%;margin-top:-10px;color:#fff;text-shadow: 0px 0px 4px #000;overflow:hidden;cursor:default;}
 .music-title span{overflow: hidden;white-space: nowrap;}
 .music-controlbar{width:100%;height:21px;position:absolute;top:75%;margin-top:-10px;cursor:pointer;}
 .player-btn-backward{width:12px;height:21px;color:#fff;position:absolute;top:0;left:30%;margin-left:-6px;}
 .player-btn-play{width:18px;height:21px;color:#fff;position:absolute;top:0;left:50%;margin-left:-9px;}
 .player-btn-forward{width:12px;height:21px;color:#fff;position:absolute;top:0;left:70%;margin-left:-6px;}
+.select-disable{user-select:none;-webkit-user-select:none;-moz-user-select: none;-khtml-user-select: none;}
