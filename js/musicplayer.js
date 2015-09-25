@@ -10,15 +10,19 @@
 	var playList = [
 		{'artist':'','musicName':'','musicURL':'','albumPic':'',},
 	];
- 
-	var loadFontAwesome = true;//If you set this to false ,then you should download the Font Awesome CSS and add it to your HTML document manually.
+	
+	//Config your player here.
+	var playerConfig = {
+		position:'rightbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
+		loadFontAwesome:true,//[true|false] Use the online Font Awesome CSS. If you set this to false ,then you should download the Font Awesome CSS and add it to your HTML document manually.
+	};
 	
 	
 	window.onload = function() {
  
 		var _movetitle = false;
 		
-		if(loadFontAwesome)cssLoad("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");//Font Awesome CSS by CDN
+		if(playerConfig.loadFontAwesome)cssLoad("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");//Font Awesome CSS by CDN
 	 
 		playerAdd(playerInit);	
 		
@@ -94,7 +98,9 @@
 			callback();
 		}
 		
-		function playerInit(){		
+		function playerInit(){	
+
+			positionSet();		
 			audio = document.querySelector("#songs");
 			_playstatus = 'pause';
 			musicNum = playList.length;
@@ -177,14 +183,32 @@
 			document.querySelector("head").appendChild(link); 
 		} 
 		
+		//make the CD turn
 		function cdPlay(){
 			document.querySelector('#player-disk').style.animationPlayState = 'running';
 			document.querySelector('#player-btn-play').innerHTML = '<i class="fa fa-pause fa-lg textshadow"></i>';			
 		}
 		
+		//make the CD stop
 		function cdPause(){
 			document.querySelector('#player-disk').style.animationPlayState = 'paused';
 			document.querySelector('#player-btn-play').innerHTML = '<i class="fa fa-play fa-lg textshadow"></i>';		
+		}
+		
+		function positionSet(){
+			var left,right,top,bottom;
+			switch(playerConfig.position){
+				case 'lefttop': left = '-100px';right = 'auto';top = '-100px';bottom = 'auto';break;
+				case 'leftbottom': left = '-100px';right = 'auto';top = 'auto';bottom = '-100px';break;
+				case 'righttop': left = 'auto';right = '-100px';top = '-100px';bottom = 'auto';break;
+				case 'rightbottom': left = 'auto';right = '-100px';top = 'auto';bottom = '-100px';break;
+				default :break;
+			}
+			document.querySelector('#music-player').style.left = left;
+			document.querySelector('#music-player').style.right = right;
+			document.querySelector('#music-player').style.top = top;
+			document.querySelector('#music-player').style.bottom = bottom;
+			document.querySelector('#music-player').className = "music-player "+playerConfig.position;
 		}
 
 	} 

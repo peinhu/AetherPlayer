@@ -7,9 +7,12 @@
  */
 
 *{-webkit-box-sizing:border-box;box-sizing:border-box;}
-.music-player {transition:All 0.6s ease-in-out;-webkit-transition:All 0.6s ease-in-out;width:200px;height:200px;overflow:hidden;position:fixed;left:-100px;bottom:-100px;z-index:999;}
+.music-player {transition:All 0.6s ease-in-out;width:200px;height:200px;overflow:hidden;position:fixed;z-index:99;}
 @media (max-width:320px) {.music-player{display:none;}}
-.music-player:hover {left:0;bottom:0;}
+.lefttop:hover{left:0 !important;bottom:auto !important;right:auto !important;top:0 !important;}
+.leftbottom:hover{left:0 !important;bottom:0 !important;right:auto !important;top:auto !important;}
+.righttop:hover{left:auto !important;bottom:auto !important;right:0 !important;top:0 !important;}
+.rightbottom:hover{left:auto !important;bottom:0 !important;right:0 !important;top:auto !important;}
 .i-circle{animation:circle 10s linear infinite;-webkit-animation:circle 10s linear infinite;width:200px;height:200px;border:#fff solid 5px; border-radius:100px;animation-play-state:paused;}
 @keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
 @-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
