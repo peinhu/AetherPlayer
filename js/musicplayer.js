@@ -13,7 +13,8 @@
 	
 	//Config your player here.
 	var playerConfig = {
-		position:'rightbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
+		position:'leftbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
+		fontFamily:'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
 		loadFontAwesome:true,//[true|false] Use the online Font Awesome CSS. If you set this to false ,then you should download the Font Awesome CSS and add it to your HTML document manually.
 	};
 	
@@ -46,7 +47,6 @@
 		audio.onwaiting = function(){//while the buffering cause a pause
 			console.log('waiting');
 		}
-				
 		
 		document.querySelector('#music-title').onmouseover = function(){			
 			_movetitle = true;	
@@ -98,9 +98,8 @@
 			callback();
 		}
 		
-		function playerInit(){	
-
-			positionSet();		
+		function playerInit(){
+			configLoad();	
 			audio = document.querySelector("#songs");
 			_playstatus = 'pause';
 			musicNum = playList.length;
@@ -109,6 +108,7 @@
 			moveLength = movelengthGet();
 			albumPreload();
 		}
+		
 		
 		function titleReset(){
 			document.querySelector('#music-title-text').style.marginLeft = '0px';
@@ -169,12 +169,14 @@
 			}      
 		}
 		
+		//load the src, album and title of the audio resource
 		function resourceLoad(){
 			audio.src = playList[index].musicURL;
 			document.querySelector("#player-disk").style.background = '#fff url('+playList[index].albumPic+') no-repeat center / 100% 100%';
 			document.querySelector('#music-title-text').innerHTML = playList[index].musicName+" - "+playList[index].artist;
 		}		
 		
+		//load the CSS in the head of html document
 		function cssLoad(url){ 
 			var link = document.createElement("link"); 
 			link.type = "text/css"; 
@@ -195,6 +197,13 @@
 			document.querySelector('#player-btn-play').innerHTML = '<i class="fa fa-play fa-lg textshadow"></i>';		
 		}
 		
+		function configLoad(){
+			positionSet();
+			fontFamilySet();
+		}
+		
+		
+		//set the position of audio player
 		function positionSet(){
 			var left,right,top,bottom;
 			switch(playerConfig.position){
@@ -208,7 +217,11 @@
 			document.querySelector('#music-player').style.right = right;
 			document.querySelector('#music-player').style.top = top;
 			document.querySelector('#music-player').style.bottom = bottom;
-			document.querySelector('#music-player').className = "music-player "+playerConfig.position;
+			document.querySelector('#music-player').className += " "+playerConfig.position;
+		}
+		
+		function fontFamilySet(){
+			document.querySelector('#music-title-text').style.fontFamily = playerConfig.fontFamily;
 		}
 
 	} 
