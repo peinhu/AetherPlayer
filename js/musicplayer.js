@@ -13,10 +13,10 @@
 	
 	//Config your player here.
 	var playerConfig = {
-		position : 'left',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
+		position : 'leftbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
 		fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
-		loadFontAwesome : true,//[true|false] Use the online Font Awesome CSS. If you set this to false ,then you should download the Font Awesome CSS and add it to your HTML document manually.
 		playMode : 'order',//[order|repeat|random] Play mode by default.
+		loadFontAwesome : true,//[true|false] Use the online Font Awesome CSS. If you set this to false ,then you should download the Font Awesome CSS and add it to your HTML document manually.
 	};
 	
 	
@@ -86,7 +86,8 @@
 			var	html = '';
 			html += '<div  class="music-player" id="music-player">';
 			
-			html += '<div class="i-circle" id="player-disk">';
+			html += '<div class="music-player-cd" >';
+			html += '<img class="i-circle" id="player-disk">';
 			html += '<div class="i-circle1"><div class="i-circle2"></div></div>';
 			html += '</div>';
 			html += '<div class="music-title select-disable" id="music-title">';
@@ -188,7 +189,7 @@
 		//load the src, album and title of the audio resource
 		function resourceLoad(){
 			audio.src = playList[index].musicURL;
-			document.querySelector("#player-disk").style.background = '#fff url('+playList[index].albumPic+') no-repeat center / 100% 100%';
+			document.querySelector("#player-disk").src = playList[index].albumPic;
 			document.querySelector('#music-title-text').innerHTML = playList[index].musicName+" - "+playList[index].artist;
 		}		
 		
@@ -246,13 +247,14 @@
 				playmode = playerConfig.playMode;
 			}
 			switch(playmode){
-				case 'order':_playmode = 'order';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-list textshadow"></i>';break;
-				case 'repeat':_playmode = 'repeat';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-retweet textshadow"></i>';break;
-				case 'random':_playmode = 'random';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-random textshadow"></i>';break;
+				case 'order':_playmode = 'order';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-list fa-lg textshadow"></i>';break;
+				case 'repeat':_playmode = 'repeat';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-retweet fa-lg textshadow"></i>';break;
+				case 'random':_playmode = 'random';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-random fa-lg textshadow"></i>';break;
 				default:break;
 			}		
 		}
 		
+		//click to change the play mode
 		function playModeChange(){
 			var playmodeArray = new Array('order','repeat','random'),playmodeArray_index;
 			for(var i=0;i<playmodeArray.length;i++){
@@ -263,6 +265,7 @@
 			playModeSet(playmodeArray[playmodeArray_index]);		
 		}
 		
+		//get the random index
 		function randomIndexGet(){
 			var randomIndex = index;
 			while(randomIndex==index){ //make sure to get the different index

@@ -6,20 +6,21 @@
  * @date		2015-08-04
  */
 
-*{-webkit-box-sizing:border-box;box-sizing:border-box;}
-.music-player {transition:All 0.6s ease-in-out;width:200px;height:200px;overflow:hidden;position:fixed;z-index:99;}
+
+.music-player {transition:All 0.6s ease-in-out;width:200px;height:200px;overflow:hidden;position:fixed;z-index:99;border:#fff solid 5px; border-radius:100px;-webkit-box-sizing:border-box;box-sizing:border-box;}
 @media (max-width:320px) {.music-player{display:none;}}
 .lefttop:hover{left:0 !important;bottom:auto !important;right:auto !important;top:0 !important;}
 .leftbottom:hover{left:0 !important;bottom:0 !important;right:auto !important;top:auto !important;}
 .righttop:hover{left:auto !important;bottom:auto !important;right:0 !important;top:0 !important;}
 .rightbottom:hover{left:auto !important;bottom:0 !important;right:0 !important;top:auto !important;}
-.i-circle{animation:circle 10s linear infinite;-webkit-animation:circle 10s linear infinite;width:200px;height:200px;border:#fff solid 5px; border-radius:100px;animation-play-state:paused;}
+.music-player-cd{width:190px;height:190px;overflow:hidden;}
+.i-circle{animation:circle 10s linear infinite;animation-play-state:paused;width:190px;height:190px;}
 @keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
 @-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
 .textshadow{text-shadow: 0px 0px 5px #000;}
 .i-circle1{width:40px;height:40px;position:absolute;top:50%;left:50%;border-radius:20px;margin-top:-20px;margin-left:-20px; overflow:hidden;background:#fff;}
 .i-circle2{width:26px;height:26px;position:absolute;top:50%;left:50%;margin-left:-13px;margin-top:-13px;border-radius:13px;box-shadow:0px 0px 7px #666 inset;}
-.music-title{width:60%;font-size:14px;height:16px;line-height:16px;position:absolute;top:25%;left:20%;margin-top:-10px;color:#fff;text-shadow: 0px 0px 4px #000;overflow:hidden;cursor:default;}
+.music-title{width:60%;font-size:14px;height:16px;line-height:16px;position:absolute;top:25%;left:20%;margin-top:-10px;color:#fff;text-shadow: 0px 0px 4px #000;overflow:hidden;cursor:default;text-align:center;}
 .music-title span{overflow: hidden;white-space: nowrap;}
 .music-controlbar{width:100%;height:21px;position:absolute;top:77%;margin-top:-10px;cursor:pointer;}
 .player-btn-backward{width:12px;height:21px;color:#fff;position:absolute;top:0;left:30%;margin-left:-6px;}
