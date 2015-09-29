@@ -111,13 +111,13 @@
 		
 		function playerInit(){
 			playerAdd();
-			configLoad();	
 			audio = document.querySelector("#songs");
+			configLoad();	
+			albumShowControl('hide');
 			albumPreload(index);
 			prepareToPlay('init');
 		}
-		
-		
+			
 		function titleReset(){
 			document.querySelector('#music-title-text').style.marginLeft = '0px';
 		}
@@ -184,6 +184,7 @@
 				img[imgIndex] = new Image();
 				img[imgIndex].src = playList[imgIndex].albumPic;
 				img[imgIndex].onload = function() {
+					if(imgIndex==0)albumShowControl('show');
 					++imgIndex;
 					albumPreload(imgIndex);
 				}
@@ -226,6 +227,12 @@
 			playModeSet();
 		}
 		
+		function albumShowControl(showstatus){
+			if(showstatus=='show')
+				document.querySelector("#player-disk").style.visibility = "visible";
+			else if(showstatus=='hide')
+				document.querySelector("#player-disk").style.visibility = "hidden";
+		}
 		
 		//set the position of audio player
 		function positionSet(){
