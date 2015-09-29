@@ -13,7 +13,7 @@
 	
 	//Config your player here.
 	var playerConfig = {
-		position : 'leftbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
+		position : 'left',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
 		fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
 		playMode : 'order',//[order|repeat|random] Play mode by default.
 		loadFontAwesome : true,//[true|false] Use the online Font Awesome CSS. If you set this to false ,then you should download the Font Awesome CSS and add it to your HTML document manually.
@@ -22,18 +22,18 @@
 	
 	window.onload = function() {
  
-		var _movetitle = false,_playstatus = 'pause',_playmode;
+		var _movetitle = false,_playstatus = 'pause',_playmode,musicNum = playList.length,index = 0;
 		
 		if(playerConfig.loadFontAwesome)cssLoad("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");//Font Awesome CSS by CDN
 	 
-		playerAdd(playerInit);	
+		playerInit();
 		
 		audio.onplaying = function(){
 			cdPlay();
 		}
 		
 		audio.onpause = function(){
-			cdPause();
+			cdPause();console.log('pause');
 		}
 		
 		audio.onended = function(){
@@ -45,8 +45,8 @@
 			cdPause();
 		}	
 
-		audio.onwaiting = function(){//while the buffering cause a pause
-			console.log('waiting');
+		audio.onprogress=function(){
+			//console.log('progress');	
 		}
 		
 		document.querySelector('#music-title').onmouseover = function(){			
@@ -81,11 +81,14 @@
 			playModeChange();		
 		};
 
+		document.querySelector('#player-disk').onerror = function(){
+			//this.src = playList[index].albumPic;
+			console.log('fail to load the album picture');
+		}
 		
-		function playerAdd(callback){
+		function playerAdd(){
 			var	html = '';
-			html += '<div  class="music-player" id="music-player">';
-			
+			html += '<div  class="music-player" id="music-player">';	
 			html += '<div class="music-player-cd" >';
 			html += '<img class="i-circle" id="player-disk">';
 			html += '<div class="i-circle1"><div class="i-circle2"></div></div>';
@@ -99,23 +102,19 @@
 			html += '<div class="player-btn-play" id="player-btn-play" ><i class="fa fa-play fa-lg textshadow"></i></div>';
 			html += '<div class="player-btn-forward" id="player-btn-forward" ><i class="fa fa-step-forward fa-lg textshadow"></i></div>';
 			html += '</div>';
-			
 			html += '</div>';
 			html += '<audio id="songs" preload="none"><source src="" type="audio/mpeg" id="song">This technique is not supported by this ancient browser.</audio>';
 			var newNode = document.createElement("div");
 			newNode.innerHTML = html; 
 			document.body.appendChild(newNode);
-			callback();
 		}
 		
 		function playerInit(){
-
+			playerAdd();
 			configLoad();	
 			audio = document.querySelector("#songs");
-			musicNum = playList.length;
-			index = 0;
+			albumPreload(index);
 			prepareToPlay('init');
-			albumPreload();
 		}
 		
 		
@@ -177,20 +176,27 @@
 			textwidth = document.querySelector('#music-title-text').offsetWidth;
 			return textwidth - titlewidth;
 		}
-		
-		function albumPreload(){
-			images = new Array();			
-			for (var i = 0; i < playList.length; i++) {
-				images[i] = new Image();
-				images[i].src = playList[i].albumPic;
-			}      
+
+		//preload the album picture by order and set cache
+		function albumPreload(imgIndex){
+			var img = new Array();
+			if(imgIndex<playList.length){
+				img[imgIndex] = new Image();
+				img[imgIndex].src = playList[imgIndex].albumPic;
+				img[imgIndex].onload = function() {
+					++imgIndex;
+					albumPreload(imgIndex);
+				}
+			}else{
+				return;
+			}
 		}
 		
 		//load the src, album and title of the audio resource
 		function resourceLoad(){
 			audio.src = playList[index].musicURL;
 			document.querySelector("#player-disk").src = playList[index].albumPic;
-			document.querySelector('#music-title-text').innerHTML = playList[index].musicName+" - "+playList[index].artist;
+			document.querySelector('#music-title-text').innerHTML = playList[index].musicName+" - "+playList[index].artist;	
 		}		
 		
 		//load the CSS in the head of html document
@@ -247,9 +253,9 @@
 				playmode = playerConfig.playMode;
 			}
 			switch(playmode){
-				case 'order':_playmode = 'order';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-list fa-lg textshadow"></i>';break;
-				case 'repeat':_playmode = 'repeat';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-retweet fa-lg textshadow"></i>';break;
-				case 'random':_playmode = 'random';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-random fa-lg textshadow"></i>';break;
+				case 'order':_playmode = 'order';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-list fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Order";break;
+				case 'repeat':_playmode = 'repeat';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-retweet fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Repeat";break;
+				case 'random':_playmode = 'random';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-random fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Random";break;
 				default:break;
 			}		
 		}

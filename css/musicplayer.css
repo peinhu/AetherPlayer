@@ -13,7 +13,7 @@
 .leftbottom:hover{left:0 !important;bottom:0 !important;right:auto !important;top:auto !important;}
 .righttop:hover{left:auto !important;bottom:auto !important;right:0 !important;top:0 !important;}
 .rightbottom:hover{left:auto !important;bottom:0 !important;right:0 !important;top:auto !important;}
-.music-player-cd{width:190px;height:190px;overflow:hidden;}
+.music-player-cd{width:190px;height:190px;overflow:hidden;background:#56CBF3;}
 .i-circle{animation:circle 10s linear infinite;animation-play-state:paused;width:190px;height:190px;}
 @keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
 @-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
