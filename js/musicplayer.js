@@ -52,13 +52,13 @@
 		
 		document.querySelector('#music-title').onmouseover = function(){			
 			_movetitle = true;	
-			inernal = setInterval(function(){titleMove('#music-title-text')},20);			
+			internal = setInterval(function(){titleMove('#music-title-text')},20);			
 		};		
 	
 		document.querySelector('#music-title').onmouseout = function(){
 			_movetitle = false;
 			titleReset();
-			clearInterval(inernal);
+			clearInterval(internal);
 		};		
 		
 		document.querySelector('#player-btn-play').onmousedown = function(){
@@ -96,7 +96,7 @@
 			html += '<div class="music-title select-disable" id="music-title">';
 			html += '<span  id="music-title-text"></span>';
 			html += '</div>';
-			html += '<div class="music-playmode select-disable" id="music-playmode"></div>'
+			html += '<div class="player-btn-playmode select-disable" id="music-playmode"></div>'
 			html += '<div class="music-controlbar select-disable">';
 			html += '<div class="player-btn-backward" id="player-btn-backward" ><i class="fa fa-step-backward fa-lg textshadow"></i></div>';
 			html += '<div class="player-btn-play" id="player-btn-play" ><i class="fa fa-play fa-lg textshadow"></i></div>';
@@ -185,7 +185,7 @@
 				if(imgIndex==0)albumShowControl('show');
 				++imgIndex;
 				albumPreload(imgIndex);
-			}				
+			}			
 		}
 		
 		//load the src, album and title of the audio resource
@@ -260,8 +260,8 @@
 				playmode = playerConfig.playMode;
 			}
 			switch(playmode){
-				case 'order':_playmode = 'order';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-list fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Order";break;
-				case 'repeat':_playmode = 'repeat';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-retweet fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Repeat";break;
+				case 'order':_playmode = 'order';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-sort-amount-asc fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Order";break;
+				case 'repeat':_playmode = 'repeat';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-refresh fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Repeat";break;
 				case 'random':_playmode = 'random';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-random fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Random";break;
 				default:break;
 			}		

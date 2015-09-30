@@ -17,14 +17,15 @@
 .i-circle{animation:circle 10s linear infinite;animation-play-state:paused;width:190px;height:190px;}
 @keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
 @-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
-.textshadow{text-shadow: 0px 0px 5px #000;}
+.textshadow{text-shadow: 0px 0px 3px #000;}
 .i-circle1{width:40px;height:40px;position:absolute;top:50%;left:50%;border-radius:20px;margin-top:-20px;margin-left:-20px; overflow:hidden;background:#fff;}
 .i-circle2{width:26px;height:26px;position:absolute;top:50%;left:50%;margin-left:-13px;margin-top:-13px;border-radius:13px;box-shadow:0px 0px 7px #666 inset;}
 .music-title{width:60%;font-size:14px;height:16px;line-height:16px;position:absolute;top:25%;left:20%;margin-top:-10px;color:#fff;text-shadow: 0px 0px 4px #000;overflow:hidden;cursor:default;text-align:center;}
 .music-title span{overflow: hidden;white-space: nowrap;}
-.music-controlbar{width:100%;height:21px;position:absolute;top:77%;margin-top:-10px;cursor:pointer;}
-.player-btn-backward{width:12px;height:21px;color:#fff;position:absolute;top:0;left:30%;margin-left:-6px;}
-.player-btn-play{width:18px;height:21px;color:#fff;position:absolute;top:0;left:50%;margin-left:-9px;}
-.player-btn-forward{width:12px;height:21px;color:#fff;position:absolute;top:0;left:70%;margin-left:-6px;}
+.music-controlbar{width:100%;height:22px;position:absolute;top:75%;margin-top:-11px;cursor:pointer;}
+.player-btn-backward{width:22px;height:22px;color:#fff;position:absolute;top:0;left:30%;margin-left:-11px;text-align:center;line-height:22px;}
+.player-btn-play{width:22px;height:22px;color:#fff;position:absolute;top:0;left:50%;margin-left:-11px;text-align:center;line-height:22px;}
+.player-btn-forward{width:22px;height:22px;color:#fff;position:absolute;top:0;left:70%;margin-left:-11px;text-align:center;line-height:22px;}
+.player-btn-playmode{position:absolute;top:50%;left:80%;margin-top:-11px;margin-left:-11px;cursor:pointer;color:#fff;width:22px;height:22px;text-align:center;line-height:22px;}
+.cursor-pointer{cursor:pointer;}
 .select-disable{user-select:none;-webkit-user-select:none;-moz-user-select: none;-khtml-user-select: none;}
-.music-playmode{position:absolute;top:50%;left:77%;margin-top:-8px;margin-left:-8px;cursor:pointer;color:#fff;width:17px;height:17px;}
