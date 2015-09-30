@@ -13,8 +13,9 @@
 	
 	//Config your player here.
 	var playerConfig = {
-		position : 'left',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
+		position : 'leftbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
 		fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
+		autoPlay : false,//[true|false] The play status of audio player when the data is ready. 
 		playMode : 'order',//[order|repeat|random] Play mode by default.
 		loadFontAwesome : true,//[true|false] Use the online Font Awesome CSS. If you set this to false ,then you should download the Font Awesome CSS and add it to your HTML document manually.
 	};
@@ -22,7 +23,7 @@
 	
 	window.onload = function() {
  
-		var _movetitle = false,_playstatus = 'pause',_playmode,musicNum = playList.length,index = 0;
+		var _movetitle = false,_playstatus = 'pause',_playmode,_index = 0;
 		
 		if(playerConfig.loadFontAwesome)cssLoad("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");//Font Awesome CSS by CDN
 	 
@@ -82,7 +83,6 @@
 		};
 
 		document.querySelector('#player-disk').onerror = function(){
-			//this.src = playList[index].albumPic;
 			console.log('fail to load the album picture');
 		}
 		
@@ -114,12 +114,8 @@
 			audio = document.querySelector("#songs");
 			configLoad();	
 			albumShowControl('hide');
-			albumPreload(index);
+			albumPreload(_index);
 			prepareToPlay('init');
-		}
-			
-		function titleReset(){
-			document.querySelector('#music-title-text').style.marginLeft = '0px';
 		}
 		
 		function musicPlay(){
@@ -134,9 +130,9 @@
 		
 		function musicNext(){
 			switch(_playmode){
-				case 'order' : ++index;if(index>musicNum-1)index = 0;
+				case 'order' : ++_index;if(_index>playList.length-1)_index = 0;break;
 				case 'repeat' : break;
-				case 'random': index = randomIndexGet();break;
+				case 'random': _index = randomIndexGet();break;
 				default : break;
 			}
 			prepareToPlay();
@@ -144,9 +140,9 @@
 		
 		function musicPrev(){
 			switch(_playmode){
-				case 'order' : --index;if(index<0)index = musicNum-1;
+				case 'order' : --_index;if(_index<0)_index = playList.length-1;break;
 				case 'repeat' : break;
-				case 'random' : index = randomIndexGet();break;
+				case 'random' : _index = randomIndexGet();break;
 				default : break;
 			}
 			prepareToPlay();	
@@ -161,6 +157,7 @@
 			audio.play();
 		}	
 		
+		//move the title text
 		function titleMove(node){
 			if(!_movetitle)return;
 			if(moveLength<=0)return;
@@ -171,6 +168,7 @@
 			nodeObj.style.marginLeft = '-'+mLeft+'px';
 		}
 		
+		//get the move length of title text
 		function movelengthGet(){
 			titlewidth = document.querySelector('#music-title').offsetWidth;
 			textwidth = document.querySelector('#music-title-text').offsetWidth;
@@ -180,24 +178,21 @@
 		//preload the album picture by order and set cache
 		function albumPreload(imgIndex){
 			var img = new Array();
-			if(imgIndex<playList.length){
-				img[imgIndex] = new Image();
-				img[imgIndex].src = playList[imgIndex].albumPic;
-				img[imgIndex].onload = function() {
-					if(imgIndex==0)albumShowControl('show');
-					++imgIndex;
-					albumPreload(imgIndex);
-				}
-			}else{
-				return;
-			}
+			if(imgIndex>=playList.length)return;
+			img[imgIndex] = new Image();
+			img[imgIndex].src = playList[imgIndex].albumPic;
+			img[imgIndex].onload = function() {
+				if(imgIndex==0)albumShowControl('show');
+				++imgIndex;
+				albumPreload(imgIndex);
+			}				
 		}
 		
 		//load the src, album and title of the audio resource
 		function resourceLoad(){
-			audio.src = playList[index].musicURL;
-			document.querySelector("#player-disk").src = playList[index].albumPic;
-			document.querySelector('#music-title-text').innerHTML = playList[index].musicName+" - "+playList[index].artist;	
+			audio.src = playList[_index].musicURL;
+			document.querySelector("#player-disk").src = playList[_index].albumPic;
+			document.querySelector('#music-title-text').innerHTML = playList[_index].musicName+" - "+playList[_index].artist;	
 		}		
 		
 		//load the CSS in the head of html document
@@ -221,21 +216,24 @@
 			document.querySelector('#player-btn-play').innerHTML = '<i class="fa fa-play fa-lg textshadow"></i>';		
 		}
 		
+		//load the configuration
 		function configLoad(){
-			positionSet();
-			fontFamilySet();
-			playModeSet();
+			positionConfig();
+			fontFamilyConfig();
+			playModeConfig();
+			autoPlayConfig();
 		}
 		
-		function albumShowControl(showstatus){
-			if(showstatus=='show')
-				document.querySelector("#player-disk").style.visibility = "visible";
-			else if(showstatus=='hide')
-				document.querySelector("#player-disk").style.visibility = "hidden";
+		//config the autoplay
+		function autoPlayConfig(){
+			if(playerConfig.autoPlay)
+				audio.autoplay = true;
+			else
+				audio.autoplay = false;
 		}
 		
-		//set the position of audio player
-		function positionSet(){
+		//config the position of audio player
+		function positionConfig(){
 			var left='auto',top='auto',bottom='auto',right='auto';
 			switch(playerConfig.position){
 				case 'lefttop': left = '-100px';right = 'auto';top = '-100px';bottom = 'auto';break;
@@ -251,11 +249,13 @@
 			document.querySelector('#music-player').className += " "+playerConfig.position;
 		}
 		
-		function fontFamilySet(){
+		//config the fontFamily
+		function fontFamilyConfig(){
 			document.querySelector('#music-title-text').style.fontFamily = playerConfig.fontFamily;
 		}
 		
-		function playModeSet(playmode){
+		//config the play mode
+		function playModeConfig(playmode){
 			if(typeof(playmode) == "undefined"){
 				playmode = playerConfig.playMode;
 			}
@@ -267,7 +267,15 @@
 			}		
 		}
 		
-		//click to change the play mode
+		//control the visibility of album pictures
+		function albumShowControl(showstatus){
+			if(showstatus=='show')
+				document.querySelector("#player-disk").style.visibility = "visible";
+			else if(showstatus=='hide')
+				document.querySelector("#player-disk").style.visibility = "hidden";
+		}
+		
+		//change the play mode of audio player
 		function playModeChange(){
 			var playmodeArray = new Array('order','repeat','random'),playmodeArray_index;
 			for(var i=0;i<playmodeArray.length;i++){
@@ -275,14 +283,19 @@
 			}
 			++playmodeArray_index;
 			if(playmodeArray_index>playmodeArray.length-1)playmodeArray_index = 0;
-			playModeSet(playmodeArray[playmodeArray_index]);		
+			playModeConfig(playmodeArray[playmodeArray_index]);		
+		}
+		
+		//reset the position of title text
+		function titleReset(){
+			document.querySelector('#music-title-text').style.marginLeft = '0px';
 		}
 		
 		//get the random index
 		function randomIndexGet(){
-			var randomIndex = index;
-			while(randomIndex==index){ //make sure to get the different index
-				randomIndex = Math.floor(Math.random()*musicNum);
+			var randomIndex = _index;
+			while(randomIndex==_index){ //make sure to get the different index
+				randomIndex = Math.floor(Math.random()*playList.length);
 			}
 			return randomIndex;
 		}
