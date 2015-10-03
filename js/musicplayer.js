@@ -91,8 +91,8 @@
 			html += '<div  class="music-player" id="music-player">';	
 			html += '<div class="music-player-cd" >';
 			html += '<img class="i-circle" id="player-disk">';
-			html += '<div class="i-circle1"><div class="i-circle2"></div></div>';
 			html += '</div>';
+			html += '<div class="i-circle1"><div class="i-circle2"></div></div>';
 			html += '<div class="music-title select-disable" id="music-title">';
 			html += '<span  id="music-title-text"></span>';
 			html += '</div>';
