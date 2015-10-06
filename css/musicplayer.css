@@ -6,19 +6,19 @@
  * @date		2015-08-04
  */
 
-.music-player {transition:All 0.6s ease-in-out;width:200px;height:200px;overflow:hidden;position:fixed;z-index:99;border:#fff solid 3px; border-radius:100px;-webkit-box-sizing:border-box;box-sizing:border-box;}
+.music-player {transition:All 0.6s ease-in-out;width:200px;height:200px;overflow:hidden;position:fixed;z-index:99;border:#fff solid 4px; border-radius:100px;-webkit-box-sizing:border-box;box-sizing:border-box;}
 @media (max-width:320px) {.music-player{display:none;}}
 .lefttop:hover{left:0 !important;bottom:auto !important;right:auto !important;top:0 !important;}
 .leftbottom:hover{left:0 !important;bottom:0 !important;right:auto !important;top:auto !important;}
 .righttop:hover{left:auto !important;bottom:auto !important;right:0 !important;top:0 !important;}
 .rightbottom:hover{left:auto !important;bottom:0 !important;right:0 !important;top:auto !important;}
 .music-player-cd{overflow:hidden;background:#56CBF3;}
-.i-circle{animation:circle 10s linear infinite;animation-play-state:paused;width:194px;height:194px;display:block;}
+.i-circle{animation:circle 10s linear infinite;animation-play-state:paused;width:192px;height:192px;display:block;}
 @keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
 @-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
 .textshadow{text-shadow: 0px 0px 3px #000;}
-.i-circle1{width:50px;height:50px;position:absolute;top:50%;left:50%;border-radius:25px;margin-top:-25px;margin-left:-25px; overflow:hidden;background:linear-gradient(to bottom right,#ddd,#fff, #ddd);border:#eee solid 1px;box-sizing:border-box;}
-.i-circle2{width:24px;height:24px;position:absolute;top:50%;left:50%;margin-left:-12px;margin-top:-12px;border-radius:12px;box-shadow:0 0 1px #ccc inset;background:#fff;}
+.i-circle1{width:60px;height:60px;position:absolute;top:50%;left:50%;border-radius:30px;margin-top:-30px;margin-left:-30px; overflow:hidden;border:#fff solid 2px;box-sizing:border-box;background:-webkit-gradient(linear,0% 0%,100% 100%, color-stop(0.15, #ccc), color-stop(0.2, #d6d6d6),color-stop(0.5, #fff), color-stop(0.8, #e3e3e3),color-stop(0.85, #e7e7e7));}
+.i-circle2{width:26px;height:26px;position:absolute;top:50%;left:50%;margin-left:-13px;margin-top:-13px;border-radius:13px;box-shadow: 0 0 0 1px #c2c2c2 inset;background:#fff;}
 .music-title{width:60%;font-size:14px;height:16px;line-height:16px;position:absolute;top:22%;left:20%;margin-top:-10px;color:#fff;text-shadow: 0px 0px 4px #000;overflow:hidden;cursor:default;text-align:center;}
 .music-title span{overflow: hidden;white-space: nowrap;}
 .music-controlbar{width:100%;height:22px;position:absolute;top:78%;margin-top:-11px;cursor:pointer;}
