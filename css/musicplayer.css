@@ -17,7 +17,7 @@
 @keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
 @-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
 .textshadow{text-shadow: 0px 0px 3px #000;}
-.i-circle1{width:60px;height:60px;position:absolute;top:50%;left:50%;border-radius:30px;margin-top:-30px;margin-left:-30px; overflow:hidden;border:#fff solid 2px;box-sizing:border-box;background:-webkit-gradient(linear,0% 0%,100% 100%, color-stop(0.15, #ccc), color-stop(0.2, #d6d6d6),color-stop(0.5, #fff), color-stop(0.8, #e3e3e3),color-stop(0.85, #e7e7e7));}
+.i-circle1{width:60px;height:60px;position:absolute;top:50%;left:50%;border-radius:30px;margin-top:-30px;margin-left:-30px; overflow:hidden;border:#eee solid 1px;box-sizing:border-box;background: linear-gradient(-40deg,#fff 30%,#e3e3e3 42%,#bbb 50%, #e3e3e3 58%,#fff 70%);}
 .i-circle2{width:26px;height:26px;position:absolute;top:50%;left:50%;margin-left:-13px;margin-top:-13px;border-radius:13px;box-shadow: 0 0 0 1px #c2c2c2 inset;background:#fff;}
 .music-title{width:60%;font-size:14px;height:16px;line-height:16px;position:absolute;top:22%;left:20%;margin-top:-10px;color:#fff;text-shadow: 0px 0px 4px #000;overflow:hidden;cursor:default;text-align:center;}
 .music-title span{overflow: hidden;white-space: nowrap;}
