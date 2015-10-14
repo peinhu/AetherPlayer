@@ -8,7 +8,7 @@
 
 	//Edit your playlist here.
 	var playList = [
-		{'artist':'','musicName':'','musicURL':'','albumPic':'',},
+		{'artist':'','musicName':'','musicURL':'','albumPic':'',}
 	];
 	
 	//Config your player here.
@@ -17,17 +17,17 @@
 		fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
 		autoPlay : false,//[true|false] The play status of audio player when the data is ready. 
 		playMode : 'order',//[order|repeat|random] Play mode by default.
-		loadFontAwesome : true,//[true|false] Use the online Font Awesome CSS. If you set this to false ,then you should download the Font Awesome CSS and add it to your HTML document manually.
+		loadFontAwesome : true,//[true|false] Use the online Font Awesome CSS. If you set this to false ,then you should download the Font Awesome CSS and reference it to your HTML document manually.
 	};
 	
 	
 	window.onload = function() {
- 
 		var _movetitle = false,_playstatus = 'pause',_playmode,_index = 0;
 		
 		if(playerConfig.loadFontAwesome)cssLoad("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");//Font Awesome CSS by CDN
 	 
 		playerInit();
+		
 		
 		audio.onplaying = function(){
 			cdPlay();
@@ -45,10 +45,6 @@
 			console.log('error');
 			cdPause();
 		}	
-
-		audio.onprogress=function(){
-			//console.log('progress');	
-		}
 		
 		document.querySelector('#music-title').onmouseover = function(){			
 			_movetitle = true;	
@@ -92,16 +88,14 @@
 			html += '<div class="music-player-cd" >';
 			html += '<img class="i-circle" id="player-disk">';
 			html += '</div>';
-			html += '<div class="i-circle1"><div class="i-circle2"></div></div>';
+			html += '<div class="i-circle1" ><div class="i-circle2"></div></div>';
 			html += '<div class="music-title select-disable" id="music-title">';
 			html += '<span  id="music-title-text"></span>';
 			html += '</div>';
 			html += '<div class="player-btn-playmode select-disable" id="music-playmode"></div>'
-			html += '<div class="music-controlbar select-disable">';
-			html += '<div class="player-btn-backward" id="player-btn-backward" ><i class="fa fa-step-backward fa-lg textshadow"></i></div>';
-			html += '<div class="player-btn-play" id="player-btn-play" ><i class="fa fa-play fa-lg textshadow"></i></div>';
-			html += '<div class="player-btn-forward" id="player-btn-forward" ><i class="fa fa-step-forward fa-lg textshadow"></i></div>';
-			html += '</div>';
+			html += '<div class="player-btn-backward select-disable" id="player-btn-backward" ><i class="fa fa-step-backward fa-lg textshadow"></i></div>';
+			html += '<div class="player-btn-play select-disable" id="player-btn-play" ><i class="fa fa-play fa-lg textshadow"></i></div>';
+			html += '<div class="player-btn-forward select-disable" id="player-btn-forward" ><i class="fa fa-step-forward fa-lg textshadow"></i></div>';
 			html += '</div>';
 			html += '<audio id="songs" preload="none"><source src="" type="audio/mpeg" id="song">This technique is not supported by this ancient browser.</audio>';
 			var newNode = document.createElement("div");

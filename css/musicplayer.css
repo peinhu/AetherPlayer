@@ -17,14 +17,13 @@
 @keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
 @-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
 .textshadow{text-shadow: 0px 0px 3px #000;}
-.i-circle1{width:60px;height:60px;position:absolute;top:50%;left:50%;border-radius:30px;margin-top:-30px;margin-left:-30px; overflow:hidden;border:#eee solid 1px;box-sizing:border-box;background: linear-gradient(-40deg,#fff 30%,#e3e3e3 42%,#bbb 50%, #e3e3e3 58%,#fff 70%);}
+.i-circle1{width:60px;height:60px;position:absolute;top:50%;left:50%;border-radius:30px;margin-top:-30px;margin-left:-30px; overflow:hidden;border:#eee solid 1px;box-sizing:border-box;background: linear-gradient(-35deg,#fff 30%,#e0e0e0 42%,#bbb 50%, #e0e0e0 58%,#fff 70%);}
 .i-circle2{width:26px;height:26px;position:absolute;top:50%;left:50%;margin-left:-13px;margin-top:-13px;border-radius:13px;box-shadow: 0 0 0 1px #c2c2c2 inset;background:#fff;}
-.music-title{width:60%;font-size:14px;height:16px;line-height:16px;position:absolute;top:22%;left:20%;margin-top:-10px;color:#fff;text-shadow: 0px 0px 4px #000;overflow:hidden;cursor:default;text-align:center;}
+.music-title{width:50%;font-size:14px;height:16px;line-height:16px;position:absolute;top:20%;left:25%;color:#fff;text-shadow: 0px 0px 1px #000;overflow:hidden;cursor:default;text-align:center;margin-top:-8px;}
 .music-title span{overflow: hidden;white-space: nowrap;}
-.music-controlbar{width:100%;height:22px;position:absolute;top:78%;margin-top:-11px;cursor:pointer;}
-.player-btn-backward{width:22px;height:22px;color:#fff;position:absolute;top:0;left:30%;margin-left:-11px;text-align:center;line-height:22px;}
-.player-btn-play{width:22px;height:22px;color:#fff;position:absolute;top:0;left:50%;margin-left:-11px;text-align:center;line-height:22px;}
-.player-btn-forward{width:22px;height:22px;color:#fff;position:absolute;top:0;left:70%;margin-left:-11px;text-align:center;line-height:22px;}
-.player-btn-playmode{position:absolute;top:50%;left:82%;margin-top:-11px;margin-left:-11px;cursor:pointer;color:#fff;width:22px;height:22px;text-align:center;line-height:22px;}
+.player-btn-backward{width:22px;height:22px;color:#fff;position:absolute;top:72%;left:25%;margin-left:-11px;margin-top:-11px;text-align:center;line-height:22px;cursor:pointer;}
+.player-btn-play{width:22px;height:22px;color:#fff;position:absolute;top:83%;left:50%;margin-left:-11px;margin-top:-11px;text-align:center;line-height:22px;cursor:pointer;}
+.player-btn-forward{width:22px;height:22px;color:#fff;position:absolute;top:72%;left:75%;margin-left:-11px;margin-top:-11px;text-align:center;line-height:22px;cursor:pointer;}
+.player-btn-playmode{position:absolute;top:50%;left:83%;margin-top:-11px;margin-left:-11px;cursor:pointer;color:#fff;width:22px;height:22px;text-align:center;line-height:22px;}
 .cursor-pointer{cursor:pointer;}
 .select-disable{user-select:none;-webkit-user-select:none;-moz-user-select: none;-khtml-user-select: none;}
