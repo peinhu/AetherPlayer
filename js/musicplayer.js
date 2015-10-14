@@ -5,11 +5,6 @@
  * @site		http://2ndrenais.com
  * @date		2015-08-04
  */
-
-	//Edit your playlist here.
-	var playList = [
-		{'artist':'','musicName':'','musicURL':'','albumPic':'',}
-	];
 	
 	//Config your player here.
 	var playerConfig = {
