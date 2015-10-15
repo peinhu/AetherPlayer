@@ -12,24 +12,23 @@
 		fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
 		autoPlay : false,//[true|false] The play status of audio player when the data is ready. 
 		playMode : 'order',//[order|repeat|random] Play mode by default.
-		loadFontAwesome : true,//[true|false] Use the online Font Awesome CSS. If you set this to false ,then you should download the Font Awesome CSS and reference it to your HTML document manually.
+		loadFontAwesome : true,//[true|false] Use the online Font Awesome CSS. Warning: If you set this to false, then you should download the Font Awesome CSS and reference it to your HTML document manually.
 	};
 	
 	
 	window.onload = function() {
-		var _movetitle = false,_playstatus = 'pause',_playmode,_index = 0;
+		var _movetitle = false,_playstatus = 'pause',_playmode,_songindex = 0;
 		
 		if(playerConfig.loadFontAwesome)cssLoad("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");//Font Awesome CSS by CDN
 	 
 		playerInit();
-		
 		
 		audio.onplaying = function(){
 			cdPlay();
 		}
 		
 		audio.onpause = function(){
-			cdPause();console.log('pause');
+			cdPause();
 		}
 		
 		audio.onended = function(){
@@ -37,22 +36,21 @@
 		};
 
 		audio.onerror = function(){ 
-			console.log('error');
 			cdPause();
 		}	
 		
-		document.querySelector('#music-title').onmouseover = function(){			
+		document.querySelector('#aetherplayer #player-title').onmouseover = function(){			
 			_movetitle = true;	
-			internal = setInterval(function(){titleMove('#music-title-text')},20);			
+			internal = setInterval(function(){titleMove('#player-title-text')},20);			
 		};		
 	
-		document.querySelector('#music-title').onmouseout = function(){
+		document.querySelector('#aetherplayer #player-title').onmouseout = function(){
 			_movetitle = false;
 			titleReset();
 			clearInterval(internal);
 		};		
 		
-		document.querySelector('#player-btn-play').onmousedown = function(){
+		document.querySelector('#aetherplayer #player-btn-play').onmousedown = function(){
 			if(_playstatus=='pause'){
 				musicPlay();
 			}else if(_playstatus=='playing'){
@@ -60,50 +58,47 @@
 			}	
 		};
 		
-		document.querySelector('#player-btn-backward').onmousedown = function(){
+		document.querySelector('#aetherplayer #player-btn-backward').onmousedown = function(){
 			musicPrev();		
 		};
 		
-		document.querySelector('#player-btn-forward').onmousedown = function(){
+		document.querySelector('#aetherplayer #player-btn-forward').onmousedown = function(){
 			musicNext();		
 		};
 		
 		
-		document.querySelector('#music-playmode').onmousedown = function(){
+		document.querySelector('#aetherplayer #player-btn-playmode').onmousedown = function(){
 			playModeChange();		
 		};
-
-		document.querySelector('#player-disk').onerror = function(){
-			console.log('fail to load the album picture');
-		}
 		
 		function playerAdd(){
 			var	html = '';
-			html += '<div  class="music-player" id="music-player">';	
-			html += '<div class="music-player-cd" >';
-			html += '<img class="i-circle" id="player-disk">';
+			html += '<div  class="player" id="player">';	
+			html += '<div class="player-disk" >';
+			html += '<img class="player-disk-image i-circle" id="player-disk-image">';
+			html += '<div class="player-disk-circle-big" ><div class="player-disk-circle-small"></div></div>';
 			html += '</div>';
-			html += '<div class="i-circle1" ><div class="i-circle2"></div></div>';
-			html += '<div class="music-title select-disable" id="music-title">';
-			html += '<span  id="music-title-text"></span>';
+			html += '<div class="player-title select-disable" id="player-title">';
+			html += '<span class="player-title-text" id="player-title-text"></span>';
 			html += '</div>';
-			html += '<div class="player-btn-playmode select-disable" id="music-playmode"></div>'
-			html += '<div class="player-btn-backward select-disable" id="player-btn-backward" ><i class="fa fa-step-backward fa-lg textshadow"></i></div>';
-			html += '<div class="player-btn-play select-disable" id="player-btn-play" ><i class="fa fa-play fa-lg textshadow"></i></div>';
-			html += '<div class="player-btn-forward select-disable" id="player-btn-forward" ><i class="fa fa-step-forward fa-lg textshadow"></i></div>';
+			html += '<div class="player-btn-playmode select-disable" id="player-btn-playmode"></div>'
+			html += '<div class="player-btn-backward select-disable" id="player-btn-backward" ><i class="fa fa-step-backward fa-lg player-btn-shadow"></i></div>';
+			html += '<div class="player-btn-play select-disable" id="player-btn-play" ><i class="fa fa-play fa-lg player-btn-shadow"></i></div>';
+			html += '<div class="player-btn-forward select-disable" id="player-btn-forward" ><i class="fa fa-step-forward fa-lg player-btn-shadow"></i></div>';
 			html += '</div>';
-			html += '<audio id="songs" preload="none"><source src="" type="audio/mpeg" id="song">This technique is not supported by this ancient browser.</audio>';
+			html += '<audio id="songs" preload="none"></audio>';
 			var newNode = document.createElement("div");
-			newNode.innerHTML = html; 
+			newNode.innerHTML = html;
+			newNode.id = "aetherplayer";			
 			document.body.appendChild(newNode);
 		}
 		
 		function playerInit(){
 			playerAdd();
-			audio = document.querySelector("#songs");
+			audio = document.querySelector("#aetherplayer #songs");
 			configLoad();	
 			albumShowControl('hide');
-			albumPreload(_index);
+			albumPreload(_songindex);
 			prepareToPlay('init');
 		}
 		
@@ -119,9 +114,9 @@
 		
 		function musicNext(){
 			switch(_playmode){
-				case 'order' : ++_index;if(_index>playList.length-1)_index = 0;break;
+				case 'order' : ++_songindex;if(_songindex>playList.length-1)_songindex = 0;break;
 				case 'repeat' : break;
-				case 'random': _index = randomIndexGet();break;
+				case 'random': _songindex = randomIndexGet();break;
 				default : break;
 			}
 			prepareToPlay();
@@ -129,9 +124,9 @@
 		
 		function musicPrev(){
 			switch(_playmode){
-				case 'order' : --_index;if(_index<0)_index = playList.length-1;break;
+				case 'order' : --_songindex;if(_songindex<0)_songindex = playList.length-1;break;
 				case 'repeat' : break;
-				case 'random' : _index = randomIndexGet();break;
+				case 'random' : _songindex = randomIndexGet();break;
 				default : break;
 			}
 			prepareToPlay();	
@@ -159,8 +154,8 @@
 		
 		//get the move length of title text
 		function movelengthGet(){
-			titlewidth = document.querySelector('#music-title').offsetWidth;
-			textwidth = document.querySelector('#music-title-text').offsetWidth;
+			titlewidth = document.querySelector('#aetherplayer #player-title').offsetWidth;
+			textwidth = document.querySelector('#aetherplayer #player-title-text').offsetWidth;
 			return textwidth - titlewidth;
 		}
 
@@ -179,9 +174,9 @@
 		
 		//load the src, album and title of the audio resource
 		function resourceLoad(){
-			audio.src = playList[_index].musicURL;
-			document.querySelector("#player-disk").src = playList[_index].albumPic;
-			document.querySelector('#music-title-text').innerHTML = playList[_index].musicName+" - "+playList[_index].artist;	
+			audio.src = playList[_songindex].musicURL;
+			document.querySelector("#aetherplayer #player-disk-image").src = playList[_songindex].albumPic;
+			document.querySelector('#aetherplayer #player-title-text').innerHTML = playList[_songindex].musicName+" - "+playList[_songindex].artist;	
 		}		
 		
 		//load the CSS in the head of html document
@@ -195,14 +190,14 @@
 		
 		//make the CD turn
 		function cdPlay(){
-			document.querySelector('#player-disk').style.animationPlayState = 'running';
-			document.querySelector('#player-btn-play').innerHTML = '<i class="fa fa-pause fa-lg textshadow"></i>';			
+			document.querySelector('#aetherplayer #player-disk-image').style.animationPlayState = 'running';
+			document.querySelector('#aetherplayer #player-btn-play').innerHTML = '<i class="fa fa-pause fa-lg player-btn-shadow"></i>';			
 		}
 		
 		//make the CD stop
 		function cdPause(){
-			document.querySelector('#player-disk').style.animationPlayState = 'paused';
-			document.querySelector('#player-btn-play').innerHTML = '<i class="fa fa-play fa-lg textshadow"></i>';		
+			document.querySelector('#aetherplayer #player-disk-image').style.animationPlayState = 'paused';
+			document.querySelector('#aetherplayer #player-btn-play').innerHTML = '<i class="fa fa-play fa-lg player-btn-shadow"></i>';		
 		}
 		
 		//load the configuration
@@ -231,16 +226,16 @@
 				case 'rightbottom': left = 'auto';right = '-100px';top = 'auto';bottom = '-100px';break;
 				default :break;
 			}
-			document.querySelector('#music-player').style.left = left;
-			document.querySelector('#music-player').style.top = top;
-			document.querySelector('#music-player').style.right = right;
-			document.querySelector('#music-player').style.bottom = bottom;
-			document.querySelector('#music-player').className += " "+playerConfig.position;
+			document.querySelector('#aetherplayer #player').style.left = left;
+			document.querySelector('#aetherplayer #player').style.top = top;
+			document.querySelector('#aetherplayer #player').style.right = right;
+			document.querySelector('#aetherplayer #player').style.bottom = bottom;
+			document.querySelector('#aetherplayer #player').className += " player-position-"+playerConfig.position;
 		}
 		
 		//config the fontFamily
 		function fontFamilyConfig(){
-			document.querySelector('#music-title-text').style.fontFamily = playerConfig.fontFamily;
+			document.querySelector('#aetherplayer #player-title-text').style.fontFamily = playerConfig.fontFamily;
 		}
 		
 		//config the play mode
@@ -249,9 +244,9 @@
 				playmode = playerConfig.playMode;
 			}
 			switch(playmode){
-				case 'order':_playmode = 'order';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-sort-amount-asc fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Order";break;
-				case 'repeat':_playmode = 'repeat';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-refresh fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Repeat";break;
-				case 'random':_playmode = 'random';document.querySelector('#music-playmode').innerHTML = '<i class="fa fa-random fa-lg textshadow"></i>';document.querySelector('#music-playmode').title = "Random";break;
+				case 'order':_playmode = 'order';document.querySelector('#aetherplayer #player-btn-playmode').innerHTML = '<i class="fa fa-sort-amount-asc fa-lg player-btn-shadow"></i>';document.querySelector('#aetherplayer #player-btn-playmode').title = "Order";break;
+				case 'repeat':_playmode = 'repeat';document.querySelector('#aetherplayer #player-btn-playmode').innerHTML = '<i class="fa fa-refresh fa-lg player-btn-shadow"></i>';document.querySelector('#aetherplayer #player-btn-playmode').title = "Repeat";break;
+				case 'random':_playmode = 'random';document.querySelector('#aetherplayer #player-btn-playmode').innerHTML = '<i class="fa fa-random fa-lg player-btn-shadow"></i>';document.querySelector('#aetherplayer #player-btn-playmode').title = "Random";break;
 				default:break;
 			}		
 		}
@@ -259,9 +254,9 @@
 		//control the visibility of album pictures
 		function albumShowControl(showstatus){
 			if(showstatus=='show')
-				document.querySelector("#player-disk").style.visibility = "visible";
+				document.querySelector("#aetherplayer #player-disk-image").style.visibility = "visible";
 			else if(showstatus=='hide')
-				document.querySelector("#player-disk").style.visibility = "hidden";
+				document.querySelector("#aetherplayer #player-disk-image").style.visibility = "hidden";
 		}
 		
 		//change the play mode of audio player
@@ -277,13 +272,13 @@
 		
 		//reset the position of title text
 		function titleReset(){
-			document.querySelector('#music-title-text').style.marginLeft = '0px';
+			document.querySelector('#aetherplayer #player-title-text').style.marginLeft = '0px';
 		}
 		
 		//get the random index
 		function randomIndexGet(){
-			var randomIndex = _index;
-			while(randomIndex==_index){ //make sure to get the different index
+			var randomIndex = _songindex;
+			while(randomIndex==_songindex){ //make sure to get the different index
 				randomIndex = Math.floor(Math.random()*playList.length);
 			}
 			return randomIndex;
