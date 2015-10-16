@@ -13,7 +13,7 @@
 #aetherplayer .player-position-righttop:hover{left:auto !important;bottom:auto !important;right:0 !important;top:0 !important;}
 #aetherplayer .player-position-rightbottom:hover{left:auto !important;bottom:0 !important;right:0 !important;top:auto !important;}
 #aetherplayer .player-disk{overflow:hidden;background:#56CBF3;}
-#aetherplayer .player-disk-image{width:192px;height:192px;display:block;}
+#aetherplayer .player-disk-image{width:192px;height:192px;display:block;visibility:hidden;}
 #aetherplayer .i-circle{animation:circle 10s linear infinite;animation-play-state:paused;}
 @keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
 @-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}

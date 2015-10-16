@@ -5,23 +5,21 @@
  * @site		http://2ndrenais.com
  * @date		2015-08-04
  */
+
+	var aetherPlayer = (function() {
+
+		//Config your player here.
+		var config = {
+			position : 'leftbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
+			fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
+			autoPlay : false,//[true|false] The play status of audio player when the data is ready. 
+			playMode : 'order',//[order|repeat|random] Play mode by default.
+			onlineFontAwesome : true,//[true|false] Use the online Font Awesome CSS. Warning: If you set this to false, then you should download the Font Awesome CSS and reference it to your HTML document manually.
+		};
 	
-	//Config your player here.
-	var playerConfig = {
-		position : 'leftbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
-		fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
-		autoPlay : false,//[true|false] The play status of audio player when the data is ready. 
-		playMode : 'order',//[order|repeat|random] Play mode by default.
-		loadFontAwesome : true,//[true|false] Use the online Font Awesome CSS. Warning: If you set this to false, then you should download the Font Awesome CSS and reference it to your HTML document manually.
-	};
-	
-	
-	window.onload = function() {
-		var _movetitle = false,_playstatus = 'pause',_playmode,_songindex = 0;
-		
-		if(playerConfig.loadFontAwesome)cssLoad("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");//Font Awesome CSS by CDN
+		var _playstatus = 'pause',_playmode,_songindex = 0,preloadImg = new Array();
 	 
-		playerInit();
+		playerInit();	
 		
 		audio.onplaying = function(){
 			cdPlay();
@@ -39,18 +37,18 @@
 			cdPause();
 		}	
 		
-		document.querySelector('#aetherplayer #player-title').onmouseover = function(){			
-			_movetitle = true;	
+		$('#aetherplayer #player-title').onmouseover = function(){			
+			_movetitle = true;
 			internal = setInterval(function(){titleMove('#player-title-text')},20);			
 		};		
 	
-		document.querySelector('#aetherplayer #player-title').onmouseout = function(){
+		$('#aetherplayer #player-title').onmouseout = function(){
 			_movetitle = false;
 			titleReset();
 			clearInterval(internal);
 		};		
 		
-		document.querySelector('#aetherplayer #player-btn-play').onmousedown = function(){
+		$('#aetherplayer #player-btn-play').onmousedown = function(){
 			if(_playstatus=='pause'){
 				musicPlay();
 			}else if(_playstatus=='playing'){
@@ -58,18 +56,22 @@
 			}	
 		};
 		
-		document.querySelector('#aetherplayer #player-btn-backward').onmousedown = function(){
+		$('#aetherplayer #player-btn-backward').onmousedown = function(){
 			musicPrev();		
 		};
 		
-		document.querySelector('#aetherplayer #player-btn-forward').onmousedown = function(){
+		$('#aetherplayer #player-btn-forward').onmousedown = function(){
 			musicNext();		
 		};
 		
 		
-		document.querySelector('#aetherplayer #player-btn-playmode').onmousedown = function(){
+		$('#aetherplayer #player-btn-playmode').onmousedown = function(){
 			playModeChange();		
 		};
+		
+		function $(node){
+			return document.querySelector(node);
+		}
 		
 		function playerAdd(){
 			var	html = '';
@@ -91,14 +93,13 @@
 			newNode.innerHTML = html;
 			newNode.id = "aetherplayer";			
 			document.body.appendChild(newNode);
+			audio = $("#aetherplayer #songs");
 		}
 		
 		function playerInit(){
 			playerAdd();
-			audio = document.querySelector("#aetherplayer #songs");
-			configLoad();	
-			albumShowControl('hide');
-			albumPreload(_songindex);
+			configLoad();
+			albumPreload();
 			prepareToPlay('init');
 		}
 		
@@ -132,20 +133,19 @@
 			prepareToPlay();	
 		}
 		
-		function prepareToPlay(mode){
+		function prepareToPlay(isInit){
 			resourceLoad();
-			moveLength = movelengthGet();
-			if(mode == 'init')return;
+			if(isInit == 'init')return;
 			audio.load();
-			if(_playstatus=='pause')return;	
+			if(_playstatus == 'pause')return;	
 			audio.play();
 		}	
 		
 		//move the title text
 		function titleMove(node){
-			if(!_movetitle)return;
+			var moveLength = movelengthGet();
 			if(moveLength<=0)return;
-			var nodeObj = document.querySelector(node);
+			var nodeObj = $(node);
 			var mLeft = 0-nodeObj.offsetLeft;
 			if(mLeft>=moveLength)return;
 			mLeft += 1;
@@ -154,18 +154,18 @@
 		
 		//get the move length of title text
 		function movelengthGet(){
-			titlewidth = document.querySelector('#aetherplayer #player-title').offsetWidth;
-			textwidth = document.querySelector('#aetherplayer #player-title-text').offsetWidth;
+			titlewidth = $('#aetherplayer #player-title').offsetWidth;
+			textwidth = $('#aetherplayer #player-title-text').offsetWidth;
 			return textwidth - titlewidth;
 		}
-
+ 
 		//preload the album picture by order and set cache
-		function albumPreload(imgIndex){
-			var img = new Array();
+		function albumPreload(index){
+			var imgIndex = arguments[0] ? arguments[0] : 0;
 			if(imgIndex>=playList.length)return;
-			img[imgIndex] = new Image();
-			img[imgIndex].src = playList[imgIndex].albumPic;
-			img[imgIndex].onload = function() {
+			preloadImg[imgIndex] = new Image();
+			preloadImg[imgIndex].src = playList[imgIndex].albumPic;
+			preloadImg[imgIndex].onload = function() {
 				if(imgIndex==0)albumShowControl('show');
 				++imgIndex;
 				albumPreload(imgIndex);
@@ -175,8 +175,8 @@
 		//load the src, album and title of the audio resource
 		function resourceLoad(){
 			audio.src = playList[_songindex].musicURL;
-			document.querySelector("#aetherplayer #player-disk-image").src = playList[_songindex].albumPic;
-			document.querySelector('#aetherplayer #player-title-text').innerHTML = playList[_songindex].musicName+" - "+playList[_songindex].artist;	
+			$("#aetherplayer #player-disk-image").src = playList[_songindex].albumPic;
+			$('#aetherplayer #player-title-text').innerHTML = playList[_songindex].musicName+" - "+playList[_songindex].artist;	
 		}		
 		
 		//load the CSS in the head of html document
@@ -185,78 +185,88 @@
 			link.type = "text/css"; 
 			link.rel = "stylesheet"; 
 			link.href = url; 
-			document.querySelector("head").appendChild(link); 
+			$("head").appendChild(link); 
 		} 
 		
 		//make the CD turn
 		function cdPlay(){
-			document.querySelector('#aetherplayer #player-disk-image').style.animationPlayState = 'running';
-			document.querySelector('#aetherplayer #player-btn-play').innerHTML = '<i class="fa fa-pause fa-lg player-btn-shadow"></i>';			
+			$('#aetherplayer #player-disk-image').style.animationPlayState = 'running';
+			$('#aetherplayer #player-btn-play').innerHTML = '<i class="fa fa-pause fa-lg player-btn-shadow"></i>';			
 		}
 		
 		//make the CD stop
 		function cdPause(){
-			document.querySelector('#aetherplayer #player-disk-image').style.animationPlayState = 'paused';
-			document.querySelector('#aetherplayer #player-btn-play').innerHTML = '<i class="fa fa-play fa-lg player-btn-shadow"></i>';		
+			$('#aetherplayer #player-disk-image').style.animationPlayState = 'paused';
+			$('#aetherplayer #player-btn-play').innerHTML = '<i class="fa fa-play fa-lg player-btn-shadow"></i>';		
 		}
 		
 		//load the configuration
 		function configLoad(){
-			positionConfig();
-			fontFamilyConfig();
-			playModeConfig();
-			autoPlayConfig();
+			for(var conf in config){
+				eval(conf+"Config()");
+			}
+		}
+		
+		//config the fontAwesome
+		function onlineFontAwesomeConfig(){
+			if(config.onlineFontAwesome)cssLoad("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");//Font Awesome CSS by CDN
 		}
 		
 		//config the autoplay
 		function autoPlayConfig(){
-			if(playerConfig.autoPlay)
+			if(config.autoPlay){
+				_playstatus = 'playing';
 				audio.autoplay = true;
-			else
-				audio.autoplay = false;
+				return;
+			}
+			_playstatus = 'pause';
+			audio.autoplay = false;
 		}
 		
 		//config the position of audio player
 		function positionConfig(){
 			var left='auto',top='auto',bottom='auto',right='auto';
-			switch(playerConfig.position){
+			switch(config.position){
 				case 'lefttop': left = '-100px';right = 'auto';top = '-100px';bottom = 'auto';break;
 				case 'leftbottom': left = '-100px';right = 'auto';top = 'auto';bottom = '-100px';break;
 				case 'righttop': left = 'auto';right = '-100px';top = '-100px';bottom = 'auto';break;
 				case 'rightbottom': left = 'auto';right = '-100px';top = 'auto';bottom = '-100px';break;
 				default :break;
 			}
-			document.querySelector('#aetherplayer #player').style.left = left;
-			document.querySelector('#aetherplayer #player').style.top = top;
-			document.querySelector('#aetherplayer #player').style.right = right;
-			document.querySelector('#aetherplayer #player').style.bottom = bottom;
-			document.querySelector('#aetherplayer #player').className += " player-position-"+playerConfig.position;
+			$('#aetherplayer #player').style.left = left;
+			$('#aetherplayer #player').style.top = top;
+			$('#aetherplayer #player').style.right = right;
+			$('#aetherplayer #player').style.bottom = bottom;
+			$('#aetherplayer #player').className += " player-position-"+config.position;
 		}
 		
 		//config the fontFamily
 		function fontFamilyConfig(){
-			document.querySelector('#aetherplayer #player-title-text').style.fontFamily = playerConfig.fontFamily;
+			$('#aetherplayer #player-title-text').style.fontFamily = config.fontFamily;
 		}
 		
 		//config the play mode
-		function playModeConfig(playmode){
-			if(typeof(playmode) == "undefined"){
-				playmode = playerConfig.playMode;
-			}
+		function playModeConfig(){
+			playModeApply(config.playMode);
+		}
+		
+		//apply the play mode
+		function playModeApply(playmode){
 			switch(playmode){
-				case 'order':_playmode = 'order';document.querySelector('#aetherplayer #player-btn-playmode').innerHTML = '<i class="fa fa-sort-amount-asc fa-lg player-btn-shadow"></i>';document.querySelector('#aetherplayer #player-btn-playmode').title = "Order";break;
-				case 'repeat':_playmode = 'repeat';document.querySelector('#aetherplayer #player-btn-playmode').innerHTML = '<i class="fa fa-refresh fa-lg player-btn-shadow"></i>';document.querySelector('#aetherplayer #player-btn-playmode').title = "Repeat";break;
-				case 'random':_playmode = 'random';document.querySelector('#aetherplayer #player-btn-playmode').innerHTML = '<i class="fa fa-random fa-lg player-btn-shadow"></i>';document.querySelector('#aetherplayer #player-btn-playmode').title = "Random";break;
+				case 'order':_playmode = 'order';$('#aetherplayer #player-btn-playmode').innerHTML = '<i class="fa fa-sort-amount-asc fa-lg player-btn-shadow"></i>';$('#aetherplayer #player-btn-playmode').title = "Order";break;
+				case 'repeat':_playmode = 'repeat';$('#aetherplayer #player-btn-playmode').innerHTML = '<i class="fa fa-refresh fa-lg player-btn-shadow"></i>';$('#aetherplayer #player-btn-playmode').title = "Repeat";break;
+				case 'random':_playmode = 'random';$('#aetherplayer #player-btn-playmode').innerHTML = '<i class="fa fa-random fa-lg player-btn-shadow"></i>';$('#aetherplayer #player-btn-playmode').title = "Random";break;
 				default:break;
 			}		
 		}
 		
 		//control the visibility of album pictures
 		function albumShowControl(showstatus){
-			if(showstatus=='show')
-				document.querySelector("#aetherplayer #player-disk-image").style.visibility = "visible";
-			else if(showstatus=='hide')
-				document.querySelector("#aetherplayer #player-disk-image").style.visibility = "hidden";
+			if(showstatus=='show'){
+				$("#aetherplayer #player-disk-image").style.visibility = "visible";
+				return;
+			}	
+			$("#aetherplayer #player-disk-image").style.visibility = "hidden";
 		}
 		
 		//change the play mode of audio player
@@ -267,12 +277,12 @@
 			}
 			++playmodeArray_index;
 			if(playmodeArray_index>playmodeArray.length-1)playmodeArray_index = 0;
-			playModeConfig(playmodeArray[playmodeArray_index]);		
+			playModeApply(playmodeArray[playmodeArray_index]);		
 		}
 		
 		//reset the position of title text
 		function titleReset(){
-			document.querySelector('#aetherplayer #player-title-text').style.marginLeft = '0px';
+			$('#aetherplayer #player-title-text').style.marginLeft = '0px';
 		}
 		
 		//get the random index
@@ -283,5 +293,8 @@
 			}
 			return randomIndex;
 		}
+		
 
-	} 
+	})
+	
+	window.addEventListener("load",aetherPlayer(),false);
