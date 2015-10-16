@@ -5,45 +5,58 @@
  * @site		http://2ndrenais.com
  * @date		2015-08-04
  */
-
+	
 	var aetherPlayer = (function() {
-
+	
+		'use strict';
+		
 		//Config your player here.
 		var config = {
 			position : 'leftbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
 			fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
 			autoPlay : false,//[true|false] The play status of audio player when the data is ready. 
 			playMode : 'order',//[order|repeat|random] Play mode by default.
+			debug : false,//[true|false] Show the debug information in the console.
 			onlineFontAwesome : true,//[true|false] Use the online Font Awesome CSS. Warning: If you set this to false, then you should download the Font Awesome CSS and reference it to your HTML document manually.
 		};
 	
-		var _playstatus = 'pause',_playmode,_songindex = 0,preloadImg = new Array();
+		var audio,moveLength,_playstatus = 'pause',_playmode,_songindex = 0,preloadImg = new Array(),internal,debug;
 	 
 		playerInit();	
 		
 		audio.onplaying = function(){
 			cdPlay();
+			if(debug)debugOutput('audio - playing:'+playList[_songindex].musicName);
 		}
 		
 		audio.onpause = function(){
 			cdPause();
+			if(debug)debugOutput('audio - pause:'+playList[_songindex].musicName);
 		}
 		
 		audio.onended = function(){
 			musicNext();
+			if(debug)debugOutput('audio - ended:'+playList[_songindex].musicName);
 		};
 
 		audio.onerror = function(){ 
 			cdPause();
-		}	
+			if(debug)debugOutput('audio - error:'+playList[_songindex].musicName);
+		}
+
+		audio.onloadeddata = function(){ 
+			if(debug)debugOutput('audio - loadeddata:'+playList[_songindex].musicName);
+		}
 		
-		$('#aetherplayer #player-title').onmouseover = function(){			
-			_movetitle = true;
-			internal = setInterval(function(){titleMove('#player-title-text')},20);			
+		audio.onstalled = function(){ 
+			if(debug)debugOutput('audio - stalled:'+playList[_songindex].musicName);
+		}
+		
+		$('#aetherplayer #player-title').onmouseover = function(){
+			internal = setInterval(function(){titleMove($('#player-title-text'))},20);			
 		};		
 	
 		$('#aetherplayer #player-title').onmouseout = function(){
-			_movetitle = false;
 			titleReset();
 			clearInterval(internal);
 		};		
@@ -51,22 +64,27 @@
 		$('#aetherplayer #player-btn-play').onmousedown = function(){
 			if(_playstatus=='pause'){
 				musicPlay();
+				if(debug)debugOutput('button - play');
 			}else if(_playstatus=='playing'){
 				musicPause();
+				if(debug)debugOutput('button - pause');
 			}	
 		};
 		
 		$('#aetherplayer #player-btn-backward').onmousedown = function(){
-			musicPrev();		
+			musicPrev();
+			if(debug)debugOutput('button - prev');			
 		};
 		
 		$('#aetherplayer #player-btn-forward').onmousedown = function(){
-			musicNext();		
+			musicNext();
+			if(debug)debugOutput('button - next');			
 		};
 		
 		
 		$('#aetherplayer #player-btn-playmode').onmousedown = function(){
-			playModeChange();		
+			playModeChange();
+			if(debug)debugOutput('button - mode:'+_playmode);				
 		};
 		
 		function $(node){
@@ -135,6 +153,7 @@
 		
 		function prepareToPlay(isInit){
 			resourceLoad();
+			moveLengthGet();
 			if(isInit == 'init')return;
 			audio.load();
 			if(_playstatus == 'pause')return;	
@@ -142,10 +161,8 @@
 		}	
 		
 		//move the title text
-		function titleMove(node){
-			var moveLength = movelengthGet();
+		function titleMove(nodeObj){
 			if(moveLength<=0)return;
-			var nodeObj = $(node);
 			var mLeft = 0-nodeObj.offsetLeft;
 			if(mLeft>=moveLength)return;
 			mLeft += 1;
@@ -153,10 +170,10 @@
 		}
 		
 		//get the move length of title text
-		function movelengthGet(){
-			titlewidth = $('#aetherplayer #player-title').offsetWidth;
-			textwidth = $('#aetherplayer #player-title-text').offsetWidth;
-			return textwidth - titlewidth;
+		function moveLengthGet(){
+			var titlewidth = $('#aetherplayer #player-title').offsetWidth;
+			var textwidth = $('#aetherplayer #player-title-text').offsetWidth;
+			return moveLength = textwidth - titlewidth;
 		}
  
 		//preload the album picture by order and set cache
@@ -176,7 +193,7 @@
 		function resourceLoad(){
 			audio.src = playList[_songindex].musicURL;
 			$("#aetherplayer #player-disk-image").src = playList[_songindex].albumPic;
-			$('#aetherplayer #player-title-text').innerHTML = playList[_songindex].musicName+" - "+playList[_songindex].artist;	
+			$('#aetherplayer #player-title-text').innerHTML = playList[_songindex].musicName+" - "+playList[_songindex].artist;			
 		}		
 		
 		//load the CSS in the head of html document
@@ -248,6 +265,15 @@
 		//config the play mode
 		function playModeConfig(){
 			playModeApply(config.playMode);
+		}
+		
+		function debugConfig(){		
+			debug = config.debug;
+			if(debug)debugOutput('debugging');			
+		}
+		
+		function debugOutput(info){
+			console.log("AetherPlayer : "+info);
 		}
 		
 		//apply the play mode
