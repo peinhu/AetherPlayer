@@ -6,8 +6,8 @@
  * @date		2015-08-04
  */
 	
-	var aetherPlayer = (function() {
-	
+	(function() {
+
 		'use strict';
 		
 		//Config your player here.
@@ -17,7 +17,6 @@
 			autoPlay : false,//[true|false] The play status of audio player when the data is ready. 
 			playMode : 'order',//[order|repeat|random] Play mode by default.
 			debug : false,//[true|false] Show the debug information in the console.
-			onlineFontAwesome : true,//[true|false] Use the online Font Awesome CSS. Warning: If you set this to false, then you should download the Font Awesome CSS and reference it to your HTML document manually.
 		};
 	
 		var audio,moveLength,_playstatus = 'pause',_playmode,_songindex = 0,preloadImg = new Array(),internal,debug;
@@ -106,7 +105,7 @@
 			html += '<div class="player-btn-play select-disable" id="player-btn-play" ><i class="fa fa-play fa-lg player-btn-shadow"></i></div>';
 			html += '<div class="player-btn-forward select-disable" id="player-btn-forward" ><i class="fa fa-step-forward fa-lg player-btn-shadow"></i></div>';
 			html += '</div>';
-			html += '<audio id="songs" preload="none"></audio>';
+			html += '<audio id="songs" preload="none">The technique used in program is not supported by ancient browser.</audio>';
 			var newNode = document.createElement("div");
 			newNode.innerHTML = html;
 			newNode.id = "aetherplayer";			
@@ -118,7 +117,7 @@
 			playerAdd();
 			configLoad();
 			albumPreload();
-			prepareToPlay('init');
+			prepareToPlay();
 		}
 		
 		function musicPlay(){
@@ -151,10 +150,9 @@
 			prepareToPlay();	
 		}
 		
-		function prepareToPlay(isInit){
+		function prepareToPlay(){
 			resourceLoad();
 			moveLengthGet();
-			if(isInit == 'init')return;
 			audio.load();
 			if(_playstatus == 'pause')return;	
 			audio.play();
@@ -196,15 +194,6 @@
 			$('#aetherplayer #player-title-text').innerHTML = playList[_songindex].musicName+" - "+playList[_songindex].artist;			
 		}		
 		
-		//load the CSS in the head of html document
-		function cssLoad(url){ 
-			var link = document.createElement("link"); 
-			link.type = "text/css"; 
-			link.rel = "stylesheet"; 
-			link.href = url; 
-			$("head").appendChild(link); 
-		} 
-		
 		//make the CD turn
 		function cdPlay(){
 			$('#aetherplayer #player-disk-image').style.animationPlayState = 'running';
@@ -224,20 +213,13 @@
 			}
 		}
 		
-		//config the fontAwesome
-		function onlineFontAwesomeConfig(){
-			if(config.onlineFontAwesome)cssLoad("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");//Font Awesome CSS by CDN
-		}
-		
 		//config the autoplay
 		function autoPlayConfig(){
 			if(config.autoPlay){
 				_playstatus = 'playing';
-				audio.autoplay = true;
 				return;
 			}
 			_playstatus = 'pause';
-			audio.autoplay = false;
 		}
 		
 		//config the position of audio player
@@ -321,6 +303,10 @@
 		}
 		
 
-	})
+	})()
 	
-	window.addEventListener("load",aetherPlayer(),false);
+
+	
+	
+	
+	
