@@ -25,30 +25,30 @@
 		
 		audio.onplaying = function(){
 			cdPlay();
-			if(debug)debugOutput('audio - playing:'+playList[_songindex].musicName);
+			if(debug)debugOutput('audio - playing:'+playList[_songindex].songName);
 		}
 		
 		audio.onpause = function(){
 			cdPause();
-			if(debug)debugOutput('audio - pause:'+playList[_songindex].musicName);
+			if(debug)debugOutput('audio - pause:'+playList[_songindex].songName);
 		}
 		
 		audio.onended = function(){
 			musicNext();
-			if(debug)debugOutput('audio - ended:'+playList[_songindex].musicName);
+			if(debug)debugOutput('audio - ended:'+playList[_songindex].songName);
 		};
 
 		audio.onerror = function(){ 
 			cdPause();
-			if(debug)debugOutput('audio - error:'+playList[_songindex].musicName);
+			if(debug)debugOutput('audio - error:'+playList[_songindex].songName);
 		}
 
 		audio.onloadeddata = function(){ 
-			if(debug)debugOutput('audio - loadeddata:'+playList[_songindex].musicName);
+			if(debug)debugOutput('audio - loadeddata:'+playList[_songindex].songName);
 		}
 		
 		audio.onstalled = function(){ 
-			if(debug)debugOutput('audio - stalled:'+playList[_songindex].musicName);
+			if(debug)debugOutput('audio - stalled:'+playList[_songindex].songName);
 		}
 		
 		$('#aetherplayer #player-title').onmouseover = function(){
@@ -179,7 +179,7 @@
 			var imgIndex = arguments[0] ? arguments[0] : 0;
 			if(imgIndex>=playList.length)return;
 			preloadImg[imgIndex] = new Image();
-			preloadImg[imgIndex].src = playList[imgIndex].albumPic;
+			preloadImg[imgIndex].src = playList[imgIndex].songAlbum;
 			preloadImg[imgIndex].onload = function() {
 				if(imgIndex==0)albumShowControl('show');
 				++imgIndex;
@@ -189,9 +189,9 @@
 		
 		//load the src, album and title of the audio resource
 		function resourceLoad(){
-			audio.src = playList[_songindex].musicURL;
-			$("#aetherplayer #player-disk-image").src = playList[_songindex].albumPic;
-			$('#aetherplayer #player-title-text').innerHTML = playList[_songindex].musicName+" - "+playList[_songindex].artist;			
+			audio.src = playList[_songindex].songURL;
+			$("#aetherplayer #player-disk-image").src = playList[_songindex].songAlbum;
+			$('#aetherplayer #player-title-text').innerHTML = playList[_songindex].songName+" - "+playList[_songindex].artist;			
 		}		
 		
 		//make the CD turn
