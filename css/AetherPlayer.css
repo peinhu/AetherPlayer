@@ -18,7 +18,7 @@
 @keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
 @-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
 #aetherplayer .player-btn-shadow{text-shadow: 0px 0px 2px #000;}
-#aetherplayer .player-disk-circle-big{width:60px;height:60px;position:absolute;top:50%;left:50%;border-radius:30px;margin-top:-30px;margin-left:-30px; overflow:hidden;border:#eee solid 1px;box-sizing:border-box;background: linear-gradient(-35deg,#fff 30%,#e0e0e0 42%,#bbb 50%, #e0e0e0 58%,#fff 70%);}
+#aetherplayer .player-disk-circle-big{width:60px;height:60px;position:absolute;top:50%;left:50%;border-radius:30px;margin-top:-30px;margin-left:-30px; overflow:hidden;border:#eee solid 1px;box-sizing:border-box;background: linear-gradient(-35deg,#fff 30%,#e6e6e6 42%,#bbb 50%, #e6e6e6 58%,#fff 70%);}
 #aetherplayer .player-disk-circle-small{width:26px;height:26px;position:absolute;top:50%;left:50%;margin-left:-13px;margin-top:-13px;border-radius:13px;box-shadow: 0 0 0 1px #c2c2c2 inset;background:#fff;}
 #aetherplayer .player-title{width:50%;font-size:14px;height:16px;line-height:16px;position:absolute;top:20%;left:25%;color:#fff;text-shadow: 0px 0px 2px #000;overflow:hidden;cursor:default;text-align:center;margin-top:-8px;}
 #aetherplayer .player-title-text{overflow: hidden;white-space: nowrap;}

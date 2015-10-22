@@ -1,14 +1,14 @@
 
 /**
- * Auto Require Tool
- * Detect relative path and load CSS and JS documents in a synchronous manner.
+ *  File Include Tool
+ *  Detect relative path and load documents in a synchronous manner automatically.
  */
 var aetherPlayer = (function(){
 
 	var path_bootstrap = document.querySelector('#aetherplayer-bootstrap').src;
 	var path_to_docs = path_bootstrap.substring(0,path_bootstrap.indexOf('/js/'));
 	
-	filesLoad([path_to_docs+'/css/AetherPlayer.css','https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css',path_to_docs+'/js/playlist.js',path_to_docs+'/js/AetherPlayer.js']); 
+	filesLoad([path_to_docs+'/css/AetherPlayer.css',path_to_docs+'/js/playlist.js',path_to_docs+'/js/AetherPlayer.js','https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css']); 
 	
 	//load files by order
 	function filesLoad(arr){
