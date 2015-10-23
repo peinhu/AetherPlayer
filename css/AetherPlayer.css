@@ -6,7 +6,7 @@
  * @date		2015-08-04
  */
 
-#aetherplayer .player {transition:All 0.6s ease-in-out;width:200px;height:200px;overflow:hidden;position:fixed;z-index:99;border:#fff solid 4px; border-radius:100px;-webkit-box-sizing:border-box;box-sizing:border-box;}
+#aetherplayer .player {transition:All 0.6s ease-in-out;width:200px;height:200px;overflow:hidden;position:fixed;z-index:99;border:#fff solid 4px; border-radius:100px;-webkit-box-sizing:border-box;box-sizing:border-box;box-shadow: 0 0 1px #000;}
 @media (max-width:320px) {#aetherplayer .player{display:none;}}
 #aetherplayer .player-position-lefttop:hover{left:0 !important;bottom:auto !important;right:auto !important;top:0 !important;}
 #aetherplayer .player-position-leftbottom:hover{left:0 !important;bottom:0 !important;right:auto !important;top:auto !important;}
