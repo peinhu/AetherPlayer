@@ -1,6 +1,7 @@
 #AetherPlayer
 ![aetherplayer](http://2ndrenais.com/aetherplayer.png)  
-**AetherPlayer** is a CD-like simple HTML5 audio player which is very suitable for blogs and personal websites.  
+  
+  **AetherPlayer** is a CD-like simple HTML5 audio player which is very suitable for blogs and personal websites.  
 It's intelligent, flexible and easy to use.  
 Setting up AetherPlayer can be as simple as adding two lines of code to your homepage.  
 #Features
