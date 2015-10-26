@@ -43,5 +43,10 @@ var aetherPlayer = (function(){
 	}
 	
 })
-
-window.addEventListener("load",aetherPlayer(),false);
+	
+	//load files which are depended on AetherPlayer after the original page is completely loaded
+	document.onreadystatechange = function () {
+        if (document.readyState == "complete") {
+           aetherPlayer();
+        }
+    }
