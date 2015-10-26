@@ -1,3 +1,4 @@
+[【中文说明】](https://github.com/peinhu/AetherPlayer/wiki)
 #AetherPlayer
 ![aetherplayer](http://2ndrenais.com/aetherplayer.png)  
   
@@ -27,6 +28,7 @@ Setting up AetherPlayer can be as simple as adding two lines of code to your hom
 #Licence
 AetherPlayer is available under the GPLv2 licence, see the LICENCE file for more information.
 #Example
-http://2ndrenais.com/aetherplayer/index.html
+http://2ndrenais.com/aetherplayer/index.html  
+
 
 
