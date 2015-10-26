@@ -24,7 +24,7 @@ Setting up AetherPlayer can be as simple as adding two lines of code to your hom
   
   Tip:You may change some default configurations in `js/AetherPlayer.js` if you will.
 #Licence
-AetherPlayer is available under the GPLv2 license, see the LICENCE file for more information.
+AetherPlayer is available under the GPLv2 licence, see the LICENCE file for more information.
 #Example
 http://2ndrenais.com/aetherplayer/index.html
 
