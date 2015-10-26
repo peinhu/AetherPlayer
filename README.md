@@ -16,7 +16,7 @@ AetherPlayer is a CD-like simple html5 audio player which is very suitable for b
   
   Tip:You may change some default configurations in `js/AetherPlayer.js` if you will.
 #Licence
-GPLv2
+AetherPlayer is available under the GPLv2 license, see the LICENSE file for more information.
 #Example
 http://2ndrenais.com/aetherplayer/index.html
 
