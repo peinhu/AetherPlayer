@@ -8,9 +8,10 @@ Setting up AetherPlayer can be as simple as adding two lines of code to your hom
 [Check out the DEMO](http://2ndrenais.com/aetherplayer/index.html)
 #Features
 * autoloading : by referencing the bootstrap file of AetherPlayer to your HTML document, the rest dependent files will be loaded automatically
-* delayed load : No files will be included until the original page is completely loaded
+* delayed load : no files will be included until the original page is completely loaded
 * custom configuration : you may change the position, playmode, debug parameters in configuration
 * preload : the images of albums will be loaded by order totally when the player initialize even if they are yet to be displayed
+* non-jQuery : since the jQuery file is too overstaffed and may cause some compatibility issues, AetherPlayer use the native JavaScript to cancel the dependence on jQuery now
 
 #Usage
 0) Copy the whole program folder to your project, you can put it wherever you like.  
