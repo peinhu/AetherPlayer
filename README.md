@@ -4,7 +4,8 @@
   
   **AetherPlayer** is a CD-like simple HTML5 audio player which is very suitable for blogs and personal websites.  
 It's intelligent, flexible and easy to use.  
-Setting up AetherPlayer can be as simple as adding two lines of code to your homepage.  
+Setting up AetherPlayer can be as simple as adding two lines of code to your homepage.   
+[Check out the DEMO](http://2ndrenais.com/aetherplayer/index.html)
 #Features
 * autoloading : by referencing the bootstrap file of AetherPlayer to your HTML document, the rest dependent files will be loaded automatically
 * delayed load : No files will be included until the original page is completely loaded
@@ -27,8 +28,6 @@ Setting up AetherPlayer can be as simple as adding two lines of code to your hom
   Tip:You may change some default configurations in `js/AetherPlayer.js` if you will.
 #Licence
 AetherPlayer is available under the GPLv2 licence, see the LICENCE file for more information.
-#Example
-http://2ndrenais.com/aetherplayer/index.html  
 
 
 
