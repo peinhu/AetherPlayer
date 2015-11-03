@@ -179,7 +179,7 @@
 			var imgIndex = arguments[0] ? arguments[0] : 0;
 			if(imgIndex>=playList.length)return;
 			preloadImg[imgIndex] = new Image();
-			preloadImg[imgIndex].src = playList[imgIndex].songAlbum;
+			preloadImg[imgIndex].src = playList[imgIndex].songCover;
 			preloadImg[imgIndex].onload = function() {
 				if(imgIndex==0)albumShowControl('show');
 				++imgIndex;
@@ -190,7 +190,7 @@
 		//load the src, album and title of the audio resource
 		function resourceLoad(){
 			audio.src = playList[_songindex].songURL;
-			$("#aetherplayer #player-disk-image").src = playList[_songindex].songAlbum;
+			$("#aetherplayer #player-disk-image").src = playList[_songindex].songCover;
 			$('#aetherplayer #player-title-text').innerHTML = playList[_songindex].songName+" - "+playList[_songindex].artist;			
 		}		
 		
