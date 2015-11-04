@@ -39,7 +39,7 @@
 	};
 
 	audio.onerror = function(){ 
-		cdPause();
+		musicNext();
 		if(debug)debugOutput('audio - error:'+playList[_songindex].songName);
 	}
 
