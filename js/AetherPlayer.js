@@ -20,7 +20,7 @@
 	};
 
 	var audio,moveLength,_playstatus = 'pause',_playmode,_songindex = 0,preloadImg = new Array(),internal,debug;
- 
+	
 	playerInit();	
 	
 	audio.onplaying = function(){
@@ -116,6 +116,7 @@
 	function playerInit(){
 		playerAdd();
 		configLoad();
+		if(playList.length==0)return;
 		albumPreload();
 		prepareToPlay();
 	}
