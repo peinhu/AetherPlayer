@@ -9,18 +9,19 @@
 (function() {
 
 	'use strict';
-	
+
 	//Config your player here.
 	var config = {
+		dataStorage : 'file',//[file|database] The way to storage playlist. If you choose database, the you should declare and assign a JavaScript variable named aetherplayer_playList_database in script tag.
 		position : 'leftbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
 		fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
-		autoPlay : false,//[true|false] The play status of audio player when the data is ready. 
-		playMode : 'order',//[order|repeat|random] Play mode by default.
+		autoPlay : false,//[true|false] Start playing music immediately when the data is ready. 
+		playMode : 'order',//[order|repeat|random] The play mode by default.
 		debug : false,//[true|false] Show the debug information in the console.
 	};
 
-	var audio,moveLength,_playstatus = 'pause',_playmode,_songindex = 0,preloadImg = new Array(),internal,debug;
-	
+	var audio,moveLength,_playstatus = 'pause',_playmode,_songindex = 0,preloadImg = new Array(),internal,debug,playList=[];
+ 
 	playerInit();	
 	
 	audio.onplaying = function(){
@@ -47,7 +48,7 @@
 		if(debug)debugOutput('audio - loadeddata:'+playList[_songindex].songName);
 	}
 	
-	audio.onstalled = function(){ 
+	audio.onstalled = function(){
 		if(debug)debugOutput('audio - stalled:'+playList[_songindex].songName);
 	}
 	
@@ -79,7 +80,6 @@
 		musicNext();
 		if(debug)debugOutput('button - next');			
 	};
-	
 	
 	$('#aetherplayer #player-btn-playmode').onmousedown = function(){
 		playModeChange();
@@ -113,6 +113,7 @@
 		audio = $("#aetherplayer #songs");
 	}
 	
+	//initialization process of the player
 	function playerInit(){
 		playerAdd();
 		configLoad();
@@ -121,16 +122,19 @@
 		prepareToPlay();
 	}
 	
+	//play the song
 	function musicPlay(){
 		_playstatus = 'playing';
 		audio.play();
 	}
 	
+	//pause the song
 	function musicPause(){
 		_playstatus = 'pause';
 		audio.pause();
 	}		
 	
+	//change to the next song
 	function musicNext(){
 		switch(_playmode){
 			case 'order' : ++_songindex;if(_songindex>playList.length-1)_songindex = 0;break;
@@ -141,6 +145,7 @@
 		prepareToPlay();
 	}
 	
+	//change to the previous song
 	function musicPrev(){
 		switch(_playmode){
 			case 'order' : --_songindex;if(_songindex<0)_songindex = playList.length-1;break;
@@ -151,6 +156,7 @@
 		prepareToPlay();	
 	}
 	
+	//do some preprocessing before playing a song
 	function prepareToPlay(){
 		resourceLoad();
 		moveLengthGet();
@@ -214,7 +220,7 @@
 		}
 	}
 	
-	//config the autoplay
+	//configure the autoplay
 	function autoPlayConfig(){
 		if(config.autoPlay){
 			_playstatus = 'playing';
@@ -223,7 +229,7 @@
 		_playstatus = 'pause';
 	}
 	
-	//config the position of audio player
+	//configure the position of audio player
 	function positionConfig(){
 		var left='auto',top='auto',bottom='auto',right='auto';
 		switch(config.position){
@@ -240,16 +246,17 @@
 		$('#aetherplayer #player').className += " player-position-"+config.position;
 	}
 	
-	//config the fontFamily
+	//configure the fontFamily
 	function fontFamilyConfig(){
 		$('#aetherplayer #player-title-text').style.fontFamily = config.fontFamily;
 	}
 	
-	//config the play mode
+	//configure the play mode
 	function playModeConfig(){
 		playModeApply(config.playMode);
 	}
 	
+	//configure the debug status
 	function debugConfig(){		
 		debug = config.debug;
 		if(debug)debugOutput('debugging');			
@@ -301,6 +308,15 @@
 			randomIndex = Math.floor(Math.random()*playList.length);
 		}
 		return randomIndex;
+	}
+	
+	//configure the way to storage data
+	function dataStorageConfig(){
+		switch(config.dataStorage){
+			case "file":playList = aetherplayer_playList_file;break;
+			case "database":playList = aetherplayer_playList_database;break;
+			default:break;
+		}
 	}
 	
 
