@@ -12,7 +12,7 @@
 
 	//Config your player here.
 	var config = {
-		dataStorage : 'file',//[file|database] The way to storage playlist. If you choose database, the you should declare and assign a JavaScript variable named aetherplayer_playList_database in script tag.
+		dataStorage : 'file',//[file|database] The way to storage playlist. If you choose database, then you should declare and assign a JavaScript variable named aetherplayer_playList_database in script tag.
 		position : 'leftbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
 		fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
 		autoPlay : false,//[true|false] Start playing music immediately when the data is ready. 
