@@ -1,4 +1,6 @@
-[【中文说明】](https://github.com/peinhu/AetherPlayer/wiki)
+[【中文说明】](https://github.com/peinhu/AetherPlayer/wiki)  
+
+[>>WordPress Plugin Version<<](https://github.com/peinhu/AetherPlayer-wordpress)
 #AetherPlayer
 ![aetherplayer](http://2ndrenais.com/aetherplayer.png)  
   
