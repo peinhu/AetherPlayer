@@ -2,12 +2,12 @@
 
 [>>WordPress Plugin Version<<](https://github.com/peinhu/AetherPlayer-wordpress)
 #AetherPlayer
-![aetherplayer](http://2ndrenais.com/aetherplayer.png)  
+![aetherplayer](http://www.2ndrenais.com/aetherplayer.png)  
   
   **AetherPlayer** is a CD-like simple HTML5 audio player which is very suitable for blogs and personal websites.  
 It's intelligent, flexible and easy to use.  
 Setting up AetherPlayer can be as simple as adding two lines of code to your homepage.   
-[Check out the DEMO](http://2ndrenais.com/aetherplayer/index.html)
+[Check out the DEMO](http://www.2ndrenais.com/aetherplayer/index.html)
 #Features
 * autoloading : by referencing the bootstrap file of AetherPlayer to your HTML document, the rest dependent files will be loaded automatically
 * delayed load : no files will be included until the original page is completely loaded
