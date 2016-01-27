@@ -46,8 +46,7 @@ var aetherPlayerBoot = (function(path_bootstrap){
 	
 })
 
-
-var aetherplayer_path_bootstrap = document.currentScript.src;//get the absolute path of AetherPlayer_bootstrap.js
+var aetherplayer_path_bootstrap = document.scripts[document.scripts.length - 1].src;//get the absolute path of AetherPlayer_bootstrap.js
 
 //make sure that the original page is completely loaded
 document.onreadystatechange = function() {

@@ -5,25 +5,53 @@
  * @site		http://2ndrenais.com
  * @date		2015-08-04
  */
-
-#aetherplayer .player {transition:All 0.6s ease-in-out;width:200px;height:200px;overflow:hidden;position:fixed;z-index:99;border:#fff solid 4px; border-radius:100px;-webkit-box-sizing:border-box;box-sizing:border-box;box-shadow: 0 0 1px #000;}
-@media (max-width:320px) {#aetherplayer .player{display:none;}}
+ 
+/*desktop only*/
+@media (min-width:768px){
+#aetherplayer .player{transition:All 0.6s ease-out;width:200px;height:200px;overflow:hidden;position:fixed;z-index:99;visibility:visible !important;}
+#aetherplayer .player-disk-circle-big{width:60px;height:60px;position:absolute;top:50%;left:50%;border-radius:30px;margin-top:-30px;margin-left:-30px; overflow:hidden;border:#eee solid 1px;box-sizing:border-box;background: linear-gradient(-35deg,#fff 30%,#e6e6e6 42%,#bbb 50%, #e6e6e6 58%,#fff 70%);}
+#aetherplayer .player-disk-circle-small{width:26px;height:26px;position:absolute;top:50%;left:50%;margin-left:-13px;margin-top:-13px;border-radius:13px;box-shadow: 0 0 0 1px #c2c2c2 inset;background:#fff;}
+#aetherplayer .player-disk{overflow:hidden;background:#fff;position:absolute;border:#fff solid 4px; -webkit-box-sizing:border-box;box-sizing:border-box;box-shadow: 0 0 1px #000;border-radius:100px;width:200px;height:200px;}
+#aetherplayer .i-circle{animation:circle 10s linear infinite;-webkit-animation:circle 10s linear infinite;animation-play-state:paused;-webkit-animation-play-state:paused;}
+@keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
+@-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
+#aetherplayer .player-position-lefttop{left:-100px;right:auto;top:-100px;bottom:auto;}
+#aetherplayer .player-position-leftbottom{left:-100px;right:auto;top:auto;bottom:-100px;}
+#aetherplayer .player-position-righttop{left:auto;right:-100px;top:-100px;bottom:auto;}
+#aetherplayer .player-position-rightbottom{left:auto;right:-100px;top:auto;bottom:-100px;}
 #aetherplayer .player-position-lefttop:hover{left:0 !important;bottom:auto !important;right:auto !important;top:0 !important;}
 #aetherplayer .player-position-leftbottom:hover{left:0 !important;bottom:0 !important;right:auto !important;top:auto !important;}
 #aetherplayer .player-position-righttop:hover{left:auto !important;bottom:auto !important;right:0 !important;top:0 !important;}
 #aetherplayer .player-position-rightbottom:hover{left:auto !important;bottom:0 !important;right:0 !important;top:auto !important;}
-#aetherplayer .player-disk{overflow:hidden;background:#56CBF3;}
-#aetherplayer .player-disk-image{width:192px;height:192px;display:block;visibility:hidden;}
-#aetherplayer .i-circle{animation:circle 10s linear infinite;animation-play-state:paused;}
-@keyframes circle{from{ transform:rotate(0);}to{ transform:rotate(360deg);}}
-@-webkit-keyframes circle{from{-webkit-transform:rotate(0deg);}to{-webkit-transform:rotate(360deg);}}
-#aetherplayer .player-btn-shadow{text-shadow: 0px 0px 2px #000;}
-#aetherplayer .player-disk-circle-big{width:60px;height:60px;position:absolute;top:50%;left:50%;border-radius:30px;margin-top:-30px;margin-left:-30px; overflow:hidden;border:#eee solid 1px;box-sizing:border-box;background: linear-gradient(-35deg,#fff 30%,#e6e6e6 42%,#bbb 50%, #e6e6e6 58%,#fff 70%);}
-#aetherplayer .player-disk-circle-small{width:26px;height:26px;position:absolute;top:50%;left:50%;margin-left:-13px;margin-top:-13px;border-radius:13px;box-shadow: 0 0 0 1px #c2c2c2 inset;background:#fff;}
-#aetherplayer .player-title{width:50%;font-size:14px;height:16px;line-height:16px;position:absolute;top:20%;left:25%;color:#fff;text-shadow: 0px 0px 2px #000;overflow:hidden;cursor:default;text-align:center;margin-top:-8px;}
-#aetherplayer .player-title-text{overflow: hidden;white-space: nowrap;}
 #aetherplayer .player-btn-backward{width:22px;height:22px;color:#fff;position:absolute;top:72%;left:25%;margin-left:-11px;margin-top:-11px;text-align:center;line-height:22px;cursor:pointer;}
 #aetherplayer .player-btn-play{width:22px;height:22px;color:#fff;position:absolute;top:83%;left:50%;margin-left:-11px;margin-top:-11px;text-align:center;line-height:22px;cursor:pointer;}
 #aetherplayer .player-btn-forward{width:22px;height:22px;color:#fff;position:absolute;top:72%;left:75%;margin-left:-11px;margin-top:-11px;text-align:center;line-height:22px;cursor:pointer;}
 #aetherplayer .player-btn-playmode{position:absolute;top:50%;left:83%;margin-top:-11px;margin-left:-11px;cursor:pointer;color:#fff;width:22px;height:22px;text-align:center;line-height:22px;}
+#aetherplayer .player-tiny{display:none;}
+#aetherplayer .player-mask{display:none;}
+}
+
+/*mobile only*/
+@media (max-width:768px){
+#aetherplayer .player{width:200px;height:200px;overflow:hidden;position:fixed;left:50%;top:50%;margin-top:-100px;margin-left:-100px;z-index:99;visibility:hidden;}
+#aetherplayer .player-tiny{position:fixed;right:10px;top:40px;width:34px;height:34px;background:rgba(0,0,0,0.2);border-radius:17px;z-index:99;text-align:center;line-height:32px;color:#fff;border:#fff solid 1px;box-sizing:border-box;}
+#aetherplayer .player-disk{overflow:hidden;background:#fff;position:absolute;border:#fff solid 4px; -webkit-box-sizing:border-box;box-sizing:border-box;box-shadow: 0 0 1px #000;width:200px;height:200px;}
+#aetherplayer .player-btn-backward{width:22px;height:22px;color:#fff;position:absolute;top:80%;left:25%;margin-left:-11px;margin-top:-11px;text-align:center;line-height:22px;cursor:pointer;}
+#aetherplayer .player-btn-play{width:22px;height:22px;color:#fff;position:absolute;top:80%;left:50%;margin-left:-11px;margin-top:-11px;text-align:center;line-height:22px;cursor:pointer;}
+#aetherplayer .player-btn-forward{width:22px;height:22px;color:#fff;position:absolute;top:80%;left:75%;margin-left:-11px;margin-top:-11px;text-align:center;line-height:22px;cursor:pointer;}
+#aetherplayer .player-btn-playmode{position:absolute;top:60%;left:75%;margin-top:-11px;margin-left:-11px;cursor:pointer;color:#fff;width:22px;height:22px;text-align:center;line-height:22px;}
+#aetherplayer .player-mask{height:100%;width:100%;position:fixed;left:0;top:0;background:rgba(0,0,0,0.7);z-index:98;display:none;}
+@keyframes twinkling{0%{opacity:0.3; }50%{opacity:1; }100%{opacity:0.3; }}
+@-webkit-keyframes twinkling{0%{opacity:0.3; }50%{opacity:1; }100%{opacity:0.3; }}
+#aetherplayer #twinkling{animation:twinkling 3s infinite ease-in-out;-webkit-animation:twinkling 3s infinite ease-in-out;}
+}
+
+/*common*/
+#aetherplayer .player-disk-image{width:192px;height:192px;display:none;}
+#aetherplayer .player-btn-shadow{text-shadow: 0px 0px 2px #000;}
+#aetherplayer .player-title{width:60%;font-size:14px;height:16px;line-height:16px;position:absolute;top:22%;left:20%;color:#fff;text-shadow: 0px 0px 2px #000;overflow:hidden;cursor:default;text-align:center;margin-top:-8px;}
+#aetherplayer .player-title-text{overflow: hidden;white-space: nowrap;}
 #aetherplayer .select-disable{user-select:none;-webkit-user-select:none;-moz-user-select: none;-khtml-user-select: none;}
+#aetherplayer .fadein{animation:fadein 0.8s 1 linear;-webkit-animation:fadein 0.8s 1 linear;}
+@keyframes fadein{0%{opacity:0; }100%{opacity:1; }}
+@-webkit-keyframes fadein{0%{opacity:0; }100%{opacity:1; }}

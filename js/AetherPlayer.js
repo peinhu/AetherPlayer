@@ -14,7 +14,7 @@
 	var config = {
 		dataStorage : 'file',//[file|database] The way to storage playlist. If you choose database, then you should declare and assign a JavaScript variable named aetherplayer_playList_database in script tag.
 		position : 'leftbottom',//[lefttop|leftbottom|righttop|rightbottom] The position of audio player.
-		fontFamily : 'arial,sans-serif',//[FONTFAMILY] The fonts of your text.
+		fontFamily : 'microsoft yahei,arial,sans-serif',//[FONTFAMILY] The fonts of your text.
 		autoPlay : false,//[true|false] Start playing music immediately when the data is ready. 
 		playMode : 'order',//[order|repeat|random] The play mode by default.
 		debug : false,//[true|false] Show the debug information in the console.
@@ -24,88 +24,135 @@
  
 	playerInit();	
 	
-	audio.onplaying = function(){
-		cdPlay();
-		if(debug)debugOutput('audio - playing:'+playList[_songindex].songName);
+	//initialization process of the player
+	function playerInit(){
+		playerAdd();
+		audioEventBind();
+		buttonEventBind();
+		configLoad();
+		if(playList.length==0)return;
+		albumPreload();
+		prepareToPlay();
 	}
 	
-	audio.onpause = function(){
-		cdPause();
-		if(debug)debugOutput('audio - pause:'+playList[_songindex].songName);
-	}
+	function audioEventBind(){
 	
-	audio.onended = function(){
-		musicNext();
-		if(debug)debugOutput('audio - ended:'+playList[_songindex].songName);
-	};
+		audio.addEventListener('playing',function(){  
+			if(debug)debugOutput('audio - playing:'+playList[_songindex].songName);
+		},true );
 
-	audio.onerror = function(){ 
-		musicNext();
-		if(debug)debugOutput('audio - error:'+playList[_songindex].songName);
-	}
+		audio.addEventListener('pause',function(){
+			if(debug)debugOutput('audio - pause:'+playList[_songindex].songName);
+		},true );
+		
+		audio.addEventListener('ended',function(){
+			musicNext();
+			if(debug)debugOutput('audio - ended:'+playList[_songindex].songName);
+		});
 
-	audio.onloadeddata = function(){ 
-		if(debug)debugOutput('audio - loadeddata:'+playList[_songindex].songName);
-	}
-	
-	audio.onstalled = function(){
-		if(debug)debugOutput('audio - stalled:'+playList[_songindex].songName);
-	}
-	
-	$('#aetherplayer #player-title').onmouseover = function(){
-		internal = setInterval(function(){titleMove($('#player-title-text'))},20);			
-	};		
+		audio.addEventListener('error',function(){
+			musicNext();
+			if(debug)debugOutput('audio - error:'+playList[_songindex].songName);
+		});
 
-	$('#aetherplayer #player-title').onmouseout = function(){
-		titleReset();
-		clearInterval(internal);
-	};		
+		audio.addEventListener('loadeddata',function(){
+			if(debug)debugOutput('audio - loadeddata:'+playList[_songindex].songName);
+		});
+		
+		audio.addEventListener('stalled',function(){
+			if(debug)debugOutput('audio - stalled:'+playList[_songindex].songName);
+		}); 
 	
-	$('#aetherplayer #player-btn-play').onmousedown = function(){
-		if(_playstatus=='pause'){
-			musicPlay();
-			if(debug)debugOutput('button - play');
-		}else if(_playstatus=='playing'){
-			musicPause();
-			if(debug)debugOutput('button - pause');
-		}	
-	};
+	}
 	
-	$('#aetherplayer #player-btn-backward').onmousedown = function(){
-		musicPrev();
-		if(debug)debugOutput('button - prev');			
-	};
+	function buttonEventBind(){
+		
+		var eventType = "",isSupportTouch = "ontouchend" in document ? true : false;
+		
+		(isSupportTouch==true)?eventType = "touchstart":eventType = "mousedown";
+
+		$('#aetherplayer #player-title').addEventListener('mouseover',
+			function(){
+			internal = setInterval(function(){titleMove()},20);			
+			}
+		);		
+
+		$('#aetherplayer #player-title').addEventListener('mouseout',
+			function(){
+			titleReset();
+			clearInterval(internal);
+			}
+		)
+		
+		var playBtnFunc = function(){
+			if(_playstatus=='pause'){
+				musicPlay();
+				if(debug)debugOutput('button - play');
+			}else if(_playstatus=='playing'){
+				musicPause();
+				if(debug)debugOutput('button - pause');
+			}	
+		};
+		
+		var prevBtnFunc = function(){
+			musicPrev();
+			if(debug)debugOutput('button - prev');			
+		};
+		
+		var nextBtnFunc = function(){
+			musicNext();
+			if(debug)debugOutput('button - next');			
+		};
+		
+		var playModeBtnFunc = function(){
+			playModeChange();
+			if(debug)debugOutput('button - mode:'+_playmode);				
+		};
+
+		var AlbumShowFunc = function(){	
+			$('#aetherplayer .player').style.visibility = "visible";	
+			$('#aetherplayer .player-mask').style.display = "block";
+		};
+		
+		var AlbumHideFunc = function(){
+			$('#aetherplayer .player').style.visibility = "hidden";	
+			$('#aetherplayer .player-mask').style.display = "none";
+		}
+		
+		$('#aetherplayer #player-btn-play').addEventListener(eventType,playBtnFunc);		
+		$('#aetherplayer #player-btn-backward').addEventListener(eventType,prevBtnFunc);		
+		$('#aetherplayer #player-btn-forward').addEventListener(eventType,nextBtnFunc);		
+		$('#aetherplayer #player-btn-playmode').addEventListener(eventType,playModeBtnFunc);		
+		$('#aetherplayer .player-tiny').addEventListener(eventType,AlbumShowFunc);	
+		$('#aetherplayer .player-mask').addEventListener(eventType,AlbumHideFunc);	
+		$('#aetherplayer .player-disk-image').addEventListener("animationend", function(){	
+			this.className = this.className.replace('fadein', ''); 
+		});
+	}
 	
-	$('#aetherplayer #player-btn-forward').onmousedown = function(){
-		musicNext();
-		if(debug)debugOutput('button - next');			
-	};
 	
-	$('#aetherplayer #player-btn-playmode').onmousedown = function(){
-		playModeChange();
-		if(debug)debugOutput('button - mode:'+_playmode);				
-	};
 	
 	function $(node){
 		return document.querySelector(node);
 	}
 	
 	function playerAdd(){
-		var	html = '';
-		html += '<div  class="player" id="player">';	
-		html += '<div class="player-disk" >';
-		html += '<img class="player-disk-image i-circle" id="player-disk-image">';
-		html += '<div class="player-disk-circle-big" ><div class="player-disk-circle-small"></div></div>';
-		html += '</div>';
-		html += '<div class="player-title select-disable" id="player-title">';
-		html += '<span class="player-title-text" id="player-title-text"></span>';
-		html += '</div>';
-		html += '<div class="player-btn-playmode select-disable" id="player-btn-playmode"></div>'
-		html += '<div class="player-btn-backward select-disable" id="player-btn-backward" ><i class="fa fa-step-backward fa-lg player-btn-shadow"></i></div>';
-		html += '<div class="player-btn-play select-disable" id="player-btn-play" ><i class="fa fa-play fa-lg player-btn-shadow"></i></div>';
-		html += '<div class="player-btn-forward select-disable" id="player-btn-forward" ><i class="fa fa-step-forward fa-lg player-btn-shadow"></i></div>';
-		html += '</div>';
-		html += '<audio id="songs" preload="none">The technique used in program is not supported by ancient browser.</audio>';
+		var html = '<div  class="player" id="player">'
+		+ '<div class="player-disk i-circle" >'
+		+ '<img class="player-disk-image fadein" id="player-disk-image">'
+		+ '</div>'
+		+ '<div class="player-disk-circle-big" ><div class="player-disk-circle-small"></div></div>'
+		+ '<div class="player-title select-disable" id="player-title">'
+		+ '<span class="player-title-text" id="player-title-text"></span>'
+		+ '</div>'
+		+ '<div class="player-btn-playmode select-disable" id="player-btn-playmode"></div>'
+		+ '<div class="player-btn-backward select-disable" id="player-btn-backward" ><i class="fa fa-step-backward fa-lg player-btn-shadow"></i></div>'
+		+ '<div class="player-btn-play select-disable" id="player-btn-play" ><i class="fa fa-play fa-lg player-btn-shadow"></i></div>'
+		+ '<div class="player-btn-forward select-disable" id="player-btn-forward" ><i class="fa fa-step-forward fa-lg player-btn-shadow"></i></div>'
+		+ '</div>'
+		+ '<audio id="songs" preload="none">The technique used in program is not supported by ancient browser.</audio>'
+		+ '<div class="player-tiny"><i class="fa fa-volume-up fa-large"></i></div>'
+		+ '<div class="player-mask" id="player-mask"></div>';
 		var newNode = document.createElement("div");
 		newNode.innerHTML = html;
 		newNode.id = "aetherplayer";			
@@ -113,24 +160,19 @@
 		audio = $("#aetherplayer #songs");
 	}
 	
-	//initialization process of the player
-	function playerInit(){
-		playerAdd();
-		configLoad();
-		if(playList.length==0)return;
-		albumPreload();
-		prepareToPlay();
-	}
-	
 	//play the song
 	function musicPlay(){
 		_playstatus = 'playing';
+		$('#aetherplayer .fa-volume-up').id = 'twinkling';
+		cdPlay();
 		audio.play();
 	}
 	
 	//pause the song
 	function musicPause(){
 		_playstatus = 'pause';
+		$('#aetherplayer .fa-volume-up').id = '';
+		cdPause();
 		audio.pause();
 	}		
 	
@@ -142,6 +184,7 @@
 			case 'random': _songindex = randomIndexGet();break;
 			default : break;
 		}
+		$('#aetherplayer .player-disk-image').className = "player-disk-image fadein";
 		prepareToPlay();
 	}
 	
@@ -153,6 +196,7 @@
 			case 'random' : _songindex = randomIndexGet();break;
 			default : break;
 		}
+		$('#aetherplayer .player-disk-image').className = "player-disk-image fadein";
 		prepareToPlay();	
 	}
 	
@@ -166,7 +210,8 @@
 	}	
 	
 	//move the title text
-	function titleMove(nodeObj){
+	function titleMove(){
+		var nodeObj = $('#player-title-text');
 		if(moveLength<=0)return;
 		var mLeft = 0-nodeObj.offsetLeft;
 		if(mLeft>=moveLength)return;
@@ -188,7 +233,7 @@
 		preloadImg[imgIndex] = new Image();
 		preloadImg[imgIndex].src = playList[imgIndex].songCover;
 		preloadImg[imgIndex].onload = function() {
-			if(imgIndex==0)albumShowControl('show');
+			if(imgIndex==0)$("#aetherplayer #player-disk-image").style.display = "block";
 			++imgIndex;
 			albumPreload(imgIndex);
 		}			
@@ -203,14 +248,16 @@
 	
 	//make the CD turn
 	function cdPlay(){
-		$('#aetherplayer #player-disk-image').style.animationPlayState = 'running';
-		$('#aetherplayer #player-btn-play').innerHTML = '<i class="fa fa-pause fa-lg player-btn-shadow"></i>';			
+		$('#aetherplayer #player-btn-play').innerHTML = '<i class="fa fa-pause fa-lg player-btn-shadow"></i>';
+		$('#aetherplayer .i-circle').style.animationPlayState = 'running';
+		$('#aetherplayer .i-circle').style.webkitAnimationPlayState = 'running';			
 	}
 	
 	//make the CD stop
 	function cdPause(){
-		$('#aetherplayer #player-disk-image').style.animationPlayState = 'paused';
-		$('#aetherplayer #player-btn-play').innerHTML = '<i class="fa fa-play fa-lg player-btn-shadow"></i>';		
+		$('#aetherplayer #player-btn-play').innerHTML = '<i class="fa fa-play fa-lg player-btn-shadow"></i>';
+		$('#aetherplayer .i-circle').style.animationPlayState = 'paused';
+		$('#aetherplayer .i-circle').style.webkitAnimationPlayState = 'paused';		
 	}
 	
 	//load the configuration
@@ -231,24 +278,12 @@
 	
 	//configure the position of audio player
 	function positionConfig(){
-		var left='auto',top='auto',bottom='auto',right='auto';
-		switch(config.position){
-			case 'lefttop': left = '-100px';right = 'auto';top = '-100px';bottom = 'auto';break;
-			case 'leftbottom': left = '-100px';right = 'auto';top = 'auto';bottom = '-100px';break;
-			case 'righttop': left = 'auto';right = '-100px';top = '-100px';bottom = 'auto';break;
-			case 'rightbottom': left = 'auto';right = '-100px';top = 'auto';bottom = '-100px';break;
-			default :break;
-		}
-		$('#aetherplayer #player').style.left = left;
-		$('#aetherplayer #player').style.top = top;
-		$('#aetherplayer #player').style.right = right;
-		$('#aetherplayer #player').style.bottom = bottom;
-		$('#aetherplayer #player').className += " player-position-"+config.position;
+		$('#aetherplayer #player').className += " player-position-"+config.position;	
 	}
 	
 	//configure the fontFamily
 	function fontFamilyConfig(){
-		$('#aetherplayer #player-title-text').style.fontFamily = config.fontFamily;
+		$('#aetherplayer #player').style.fontFamily = config.fontFamily;
 	}
 	
 	//configure the play mode
@@ -274,15 +309,6 @@
 			case 'random':_playmode = 'random';$('#aetherplayer #player-btn-playmode').innerHTML = '<i class="fa fa-random fa-lg player-btn-shadow"></i>';$('#aetherplayer #player-btn-playmode').title = "Random";break;
 			default:break;
 		}		
-	}
-	
-	//control the visibility of album pictures
-	function albumShowControl(showstatus){
-		if(showstatus=='show'){
-			$("#aetherplayer #player-disk-image").style.visibility = "visible";
-			return;
-		}	
-		$("#aetherplayer #player-disk-image").style.visibility = "hidden";
 	}
 	
 	//change the play mode of audio player
