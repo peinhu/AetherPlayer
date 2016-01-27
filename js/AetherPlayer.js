@@ -128,6 +128,9 @@
 		$('#aetherplayer .player-disk-image').addEventListener("animationend", function(){	
 			this.className = this.className.replace('fadein', ''); 
 		});
+		$('#aetherplayer .player-disk-image').addEventListener("webkitAnimationEnd", function(){	
+			this.className = this.className.replace('fadein', '');
+		});
 	}
 	
 	
