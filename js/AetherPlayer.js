@@ -51,7 +51,7 @@
 		});
 
 		audio.addEventListener('error',function(){
-			musicNext();
+			setTimeout(function(){musicNext()},5000);
 			if(debug)debugOutput('audio - error:'+playList[_songindex].songName);
 		});
 
@@ -69,7 +69,7 @@
 		
 		var eventType = "",isSupportTouch = "ontouchend" in document ? true : false;
 		
-		(isSupportTouch==true)?eventType = "touchstart":eventType = "mousedown";
+		(isSupportTouch==true)?eventType = "touchend":eventType = "mousedown";
 
 		$('#aetherplayer #player-title').addEventListener('mouseover',
 			function(){
@@ -114,7 +114,8 @@
 			$('#aetherplayer .player-mask').style.display = "block";
 		};
 		
-		var AlbumHideFunc = function(){
+		var AlbumHideFunc = function(e){
+			e.preventDefault();
 			$('#aetherplayer .player').style.visibility = "hidden";	
 			$('#aetherplayer .player-mask').style.display = "none";
 		}
