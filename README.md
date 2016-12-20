@@ -24,7 +24,7 @@ Setting up AetherPlayer can be as simple as adding two lines of code to your hom
 
 2) Edit the play list in `js/playlist.js`.  
   
-  e.g. `var playList=[{'artist':'Adele','songName':'rolling in the deep','songURL':'http://www.xxx.com/path/to/song/rolling_in_the_deep.mp3','songCover':'http://www.xxx.com/path/to/album/rolling_in_the_deep.jpg'},];`  
+  e.g. `var aetherplayer_playList_file=[{'artist':'Adele','songName':'rolling in the deep','songURL':'http://www.xxx.com/path/to/song/rolling_in_the_deep.mp3','songCover':'http://www.xxx.com/path/to/album/rolling_in_the_deep.jpg'},];`  
 
 3) Enjoy the music:)  
   
