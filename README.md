@@ -5,15 +5,16 @@
 ![aetherplayer](http://www.2ndrenais.com/aetherplayer1.png)  
   
   **AetherPlayer** is a CD-like simple HTML5 audio player which is very suitable for blogs and personal websites.  
-It's intelligent, flexible and easy to use.  
+It's intelligent, responsive and easy to use.  
 Setting up AetherPlayer can be as simple as adding two lines of code to your homepage.   
 [Check out the DEMO](http://www.2ndrenais.com/aetherplayer/index.html)
 # Features
-* Autoloading : by referencing the bootstrap file of AetherPlayer to your HTML document, the rest dependent files will be loaded automatically
-* Delayed load : no files will be included until the original page is completely loaded
-* Custom configuration : you may change the position, playmode, debug parameters in configuration
-* Preload images: the images of albums will be loaded by order totally when the player initialize even if they are yet to be displayed
-* Non-jQuery : since the jQuery file is too overstaffed and may cause some compatibility issues, AetherPlayer use the native JavaScript to cancel the dependence on jQuery now
+* Autoloading : By referencing the bootstrap file of AetherPlayer to your HTML document, the rest dependent files will be loaded automatically.
+* Delayed load : No files will be included until the original page is completely loaded.
+* Custom configuration : It's very easy to change the position, playmode, debug parameters in configuration.
+* Preload images: The images of albums will be loaded by order when the player initialize even if they are yet to be displayed.
+* Responsive : The player is adaptive both on PC and mobile device.
+* Non-jQuery : Since the jQuery file is too overstaffed and may cause some compatibility issues, AetherPlayer use the native JavaScript to cancel the dependence on jQuery now.
 
 # Usage
 0 Copy the whole program folder to your project, you can put it wherever you like.  
